@@ -1,28 +1,20 @@
 import { NavBar } from "@components/NavBar/NavBar.jsx";
-import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage/LoginPage.jsx";
 import { AccountPage } from "./pages/AccountPage/AccountPage.jsx";
 import { HomePage } from "./pages/HomePage/HomePage.jsx";
 import { CartPage } from "./pages/CartPage/CartPage.jsx";
 import { ProductDetailPage } from "./pages/ProductDetailPage/ProductDetailPage.jsx";
+import { RegisterPage } from "./pages/RegisterPage/RegisterPage.jsx";
 
 function App() {
-    const [isLogin, setIsLogin] = useState(false);
-    const [userId, setUserId] = useState("");
-    const [cartItemCount, setCartItemCount] = useState(0);
-
-    useEffect(() => {
-        setIsLogin(false);
-        setCartItemCount(5);
-    }, [])
-
     return (
         <>
-            <NavBar isLogin={isLogin} cartItemCount={cartItemCount} />
+            <NavBar />
             <BrowserRouter>
                 <Routes>
-                    <Route path='/login' element={<LoginPage/>} />
+                    <Route path='/login' element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route path='/account' element={<AccountPage/>} />
                     <Route path='/cart' element={<CartPage/>} />
                     <Route path='/product/:id' element={<ProductDetailPage/>} />

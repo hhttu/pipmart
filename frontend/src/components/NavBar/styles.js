@@ -27,12 +27,12 @@ export const styles = {
         display: 'flex',
         gap: '10px',
     },
-    loginLink: {
+    link: {
         display: 'flex',
         alignItems: 'center',
         textDecoration: 'none',
         color: '#000',
-        padding: '0 20px',
+        padding: '0 5px',
     },
     userLogo: {
         marginRight: '5px'
@@ -44,6 +44,7 @@ export const styles = {
         }
     },
     cartLink: {
+        marginLeft: '10px',
         display: 'flex',
         padding: '5px 20px',
         border: '1px solid #e0e0e0',
