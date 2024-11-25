@@ -89,7 +89,7 @@ export const ProductDetailPage = () => {
                         <h3 style={styles.detailsTitle}>Details</h3>
                         <p>
                             <strong>Added Date:</strong>{' '}
-                            {new Date(dateAdded).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                            {new Date(dateAdded).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}
                         </p>
                         <p>
                             <strong>Description:</strong> {description}
