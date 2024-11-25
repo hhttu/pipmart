@@ -1,9 +1,10 @@
 import { styles } from "@components/ProductCard/styles.js";
-import { StyledCard } from "@components/ProductCard/styledComponents.js";
 import { useNavigate } from "react-router-dom";
+import { PriceDisplay } from "@components/PriceDisplay/PriceDisplay.jsx";
+import { StyledCard } from "@components/styledComponents.js";
 
 export const ProductCard = ({ product }) => {
-    const { id, image, name, price, isOnSale, salePrice } = product;
+    const { id, image, title, price, isOnSale, salePrice } = product;
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -12,18 +13,11 @@ export const ProductCard = ({ product }) => {
 
     return (
         <StyledCard onClick={handleClick}>
-            <img src={image} alt={name} style={styles.image} />
+            <img src={image} alt={title} style={styles.image} />
             <div style={styles.info}>
-                <h3 style={styles.name}>{name}</h3>
+                <h3 style={styles.name}>{title}</h3>
                 <div style={styles.priceSection}>
-                    {isOnSale ? (
-                        <>
-                            <span style={styles.originalPrice}>${price.toFixed(2)}</span>
-                            <span style={styles.salePrice}>${salePrice.toFixed(2)}</span>
-                        </>
-                    ) : (
-                        <span style={styles.price}>${price.toFixed(2)}</span>
-                    )}
+                    <PriceDisplay price={price} isOnSale={isOnSale} salePrice={salePrice} />
                 </div>
             </div>
         </StyledCard>

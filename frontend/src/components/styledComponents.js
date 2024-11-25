@@ -1,4 +1,17 @@
 import styled from "styled-components";
+import { IoSearch } from "react-icons/io5";
+
+export const StyledLinkSpan = styled.span`
+    &:hover {
+        color: #C14859;
+    }
+`;
+
+export const StyledSearchIcon = styled(IoSearch)`
+    &:hover {
+        color: #C14859;
+    }
+`;
 
 export const StyledCard = styled.div`
     display: flex;

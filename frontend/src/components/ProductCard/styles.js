@@ -1,7 +1,4 @@
 export const styles = {
-    card: {
-
-    },
     image: {
         width: '100%',
         height: '200px',
@@ -22,17 +19,5 @@ export const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         gap: '10px',
-    },
-    originalPrice: {
-        textDecoration: 'line-through',
-        color: '#999',
-    },
-    salePrice: {
-        color: '#C14859',
-        fontWeight: 'bold',
-    },
-    price: {
-        fontWeight: 'bold',
-        color: '#333',
     },
 };

@@ -3,8 +3,8 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { IoCartOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import logo from "@assets/logo.png"
-import { UserSpan } from "@components/NavBar/styledComponents.js";
 import { useUser } from "@context/UserContext.jsx";
+import { StyledLinkSpan } from "@components/styledComponents.js";
 
 export const NavBar = () => {
     const { isLogin, cartItemCount, setUserId } = useUser();
@@ -30,18 +30,18 @@ export const NavBar = () => {
                 {isLogin ? (
                     <a href="/account" style={styles.link}>
                         <FaRegCircleUser style={styles.userLogo}/>
-                        <UserSpan>My account</UserSpan>
+                        <StyledLinkSpan>My account</StyledLinkSpan>
                     </a>
                 ) : (
                     <a href="/login" style={styles.link}>
                         <FaRegCircleUser style={styles.userLogo}/>
-                        <UserSpan>Sign In/Register</UserSpan>
+                        <StyledLinkSpan>Sign In/Register</StyledLinkSpan>
                     </a>
                 )}
                 {isLogin && (
                     <a href="/" style={styles.link} onClick={handleLogOut}>
                         <FiLogOut style={styles.userLogo}/>
-                        <UserSpan>Logout</UserSpan>
+                        <StyledLinkSpan>Logout</StyledLinkSpan>
                     </a>
                 )}
                 {isLogin && (

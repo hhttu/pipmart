@@ -7,7 +7,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
     const [userId, setUserId] = useState(localStorage.getItem('userId') || null);
     const [isLogin, setIsLogin] = useState(userId !== null);
-    const [cartItemCount, setCartItemCount] = useState(Number(localStorage.getItem('cartItemCount')) || 0);
+    const [cartItemCount, setCartItemCount] = useState(0);
 
     useEffect(() => {
         if (userId) {
@@ -17,8 +17,7 @@ export const UserProvider = ({ children }) => {
         }
 
         setIsLogin(userId !== null);
-        localStorage.setItem('cartItemCount', cartItemCount);
-        console.log(`Logging in ! With user id = ${userId}`);
+        setCartItemCount(0);
     }, [userId]);
 
     return (

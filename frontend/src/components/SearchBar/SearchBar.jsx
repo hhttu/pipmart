@@ -1,5 +1,5 @@
 import { styles } from "@components/SearchBar/styles.js";
-import { StyledSearchIcon } from "@components/SearchBar/styledComponents.js";
+import { StyledSearchIcon } from "@components/styledComponents.js";
 
 export const SearchBar = ({ onSearch }) => {
     const handleSearch = (e) => {
