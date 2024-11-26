@@ -25,6 +25,13 @@ export const users = [
         password: 'securepassword789',
         email: 'alicejohnson@example.com',
     },
+    {
+        id: 4,
+        name: 'Tu Huynh',
+        username: 'tuhuynh',
+        password: 'abc',
+        email: 'hhttu@example.com',
+    },
 ]
 
 export const sampleProducts = [

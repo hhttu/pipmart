@@ -1,10 +1,10 @@
-import { Page } from "@components/Page/Page.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { users } from "../../constants.js";
 import { styles } from "./styles.js";
 import { LoginInput } from "@components/LoginInput/LoginInput.jsx";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa6";
+import { Page } from "@components/styledComponents.js";
 
 export const RegisterPage = () => {
     const [name, setName] = useState('');

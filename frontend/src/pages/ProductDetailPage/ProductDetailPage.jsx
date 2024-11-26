@@ -1,9 +1,8 @@
-import { Page } from "@components/Page/Page.jsx";
 import { useParams } from "react-router-dom";
 import { detailedProducts } from "../../constants.js";
 import { FaAngleLeft } from "react-icons/fa6";
 import { IoWarningOutline } from "react-icons/io5";
-import { StyledLinkSpan } from "@components/styledComponents.js";
+import { Page, StyledLinkSpan } from "@components/styledComponents.js";
 import { styles } from "@pages/ProductDetailPage/styles.js";
 import { PriceDisplay } from "@components/PriceDisplay/PriceDisplay.jsx";
 import { useState } from "react";
@@ -12,8 +11,8 @@ import { useUser } from "@context/UserContext.jsx";
 export const ProductDetailPage = () => {
     const { id } = useParams();
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const {isLogin, cartItemCount, setCartItemCount} = useUser()
+    const [ errorMessage, setErrorMessage ] = useState('');
+    const { isLogin, cartItemCount, setCartItemCount } = useUser();
 
     // Will be replaced by API call
     const product = detailedProducts.find((p) => p.id === parseInt(id, 10));

@@ -1,4 +1,4 @@
-import { Page } from "@components/Page/Page.jsx";
+import { Page } from "@components/styledComponents.js";
 
 export const CartPage = () => {
     return (

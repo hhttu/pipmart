@@ -4,7 +4,7 @@ import { IoCartOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import logo from "@assets/logo.png"
 import { useUser } from "@context/UserContext.jsx";
-import { StyledLinkSpan } from "@components/styledComponents.js";
+import { StyledLink, StyledLinkSpan } from "@components/styledComponents.js";
 
 export const NavBar = () => {
     const { isLogin, cartItemCount, setUserId } = useUser();
@@ -45,10 +45,10 @@ export const NavBar = () => {
                     </a>
                 )}
                 {isLogin && (
-                    <a href="/cart" style={styles.cartLink}>
+                    <StyledLink href="/cart">
                         <IoCartOutline style={styles.cartIcon}/>
                         <span style={styles.cartBadge}>{cartItemCount}</span>
-                    </a>
+                    </StyledLink>
                 )}
             </div>
         </nav>

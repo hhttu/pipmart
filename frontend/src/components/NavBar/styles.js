@@ -43,13 +43,6 @@ export const styles = {
             color: '#C14859',
         }
     },
-    cartLink: {
-        marginLeft: '10px',
-        display: 'flex',
-        padding: '5px 20px',
-        border: '1px solid #e0e0e0',
-        borderRadius: '20px',
-    },
     cartIcon: {
         color: '#3D3D3D',
         width: '20px',

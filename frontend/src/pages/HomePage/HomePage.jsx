@@ -1,7 +1,7 @@
-import { Page } from "@components/Page/Page.jsx";
 import { SearchBar } from "@components/SearchBar/SearchBar.jsx";
 import { ProductList } from "@components/ProductList/ProductList.jsx";
 import { sampleProducts } from "../../constants.js";
+import { Page } from "@components/styledComponents.js";
 
 
 export const HomePage = () => {
