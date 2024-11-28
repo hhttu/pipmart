@@ -56,6 +56,22 @@ export const StyledButton = styled.button`
     }
 `
 
+export const StyledCheckOutButton = styled.button`
+    background-color: #C14859;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    margin-top: 20px;
+    &:hover {
+        background-color: #A33B49;
+    }
+    &:disabled {
+        background-color: #ccc;
+        cursor: default;
+    };
+`
+
 export const Page = styled.div`
     padding-top: 100px;
 `;

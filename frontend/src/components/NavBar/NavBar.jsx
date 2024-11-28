@@ -7,7 +7,7 @@ import { useUser } from "@context/UserContext.jsx";
 import { StyledLink, StyledLinkSpan } from "@components/styledComponents.js";
 
 export const NavBar = () => {
-    const { isLogin, cartItemCount, setUserId } = useUser();
+    const { isLogin, cartList, setUserId } = useUser();
 
     const handleLogOut = () => {
         setUserId(null);
@@ -47,7 +47,7 @@ export const NavBar = () => {
                 {isLogin && (
                     <StyledLink href="/cart">
                         <IoCartOutline style={styles.cartIcon}/>
-                        <span style={styles.cartBadge}>{cartItemCount}</span>
+                        <span style={styles.cartBadge}>{cartList.length}</span>
                     </StyledLink>
                 )}
             </div>

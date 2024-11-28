@@ -4,7 +4,7 @@ export const styles = {
         padding: "25px",
         backgroundColor: "#f9f9f9",
         borderRight: "1px solid #ddd",
-        height: "100vh",
+        height: "300px",
     },
     profileSection: {
         textAlign: "center",

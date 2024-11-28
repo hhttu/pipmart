@@ -12,7 +12,8 @@ export const ProductDetailPage = () => {
     const { id } = useParams();
 
     const [ errorMessage, setErrorMessage ] = useState('');
-    const { isLogin, cartItemCount, setCartItemCount } = useUser();
+    const [ quantity, setQuantity ] = useState(1);
+    const { isLogin, setCartList } = useUser();
 
     // Will be replaced by API call
     const product = detailedProducts.find((p) => p.id === parseInt(id, 10));
@@ -42,7 +43,10 @@ export const ProductDetailPage = () => {
         }
 
         // Proceed with adding to cart
-        setCartItemCount(cartItemCount + 1);
+        setCartList((prevCartList) => [
+            ...prevCartList,
+            { ...product, quantity }
+        ]);
         alert('Item added to cart!');
     };
 
@@ -70,9 +74,10 @@ export const ProductDetailPage = () => {
                         <input
                             type="number"
                             id="quantity"
-                            defaultValue={1}
                             style={styles.quantityInput}
                             min="1"
+                            value={quantity}
+                            onChange={(e) => setQuantity(Number(e.target.value))}
                         />
                     </div>
 
