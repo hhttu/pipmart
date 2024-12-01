@@ -1,8 +1,8 @@
-import { AccountSideBar } from "@components/AccountSideBar/AccountSideBar.jsx";
+import { AccountSideBar } from "@components/account/AccountSideBar/AccountSideBar.jsx";
 import { styles } from "@pages/AccountPage/styles.js";
 import { useState } from "react";
-import { AccountOrders } from "@components/AccountOrders/AccountOrders.jsx";
-import { AccountProducts } from "@components/AccountProducts/AccountProducts.jsx";
+import { AccountOrders } from "@components/account/AccountOrders/AccountOrders.jsx";
+import { AccountProducts } from "@components/account/AccountProducts/AccountProducts.jsx";
 import { Page } from "@components/styledComponents.js";
 
 export const AccountPage = () => {

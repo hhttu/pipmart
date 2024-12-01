@@ -1,5 +1,5 @@
-import { styles } from "@components/ProductList/styles.js";
-import { ProductCard } from "@components/ProductCard/ProductCard.jsx";
+import { styles } from "@components/product/ProductList/styles.js";
+import { ProductCard } from "@components/product/ProductCard/ProductCard.jsx";
 
 export const ProductList = ({ products }) => {
     return (

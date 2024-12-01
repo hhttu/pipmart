@@ -1,8 +1,7 @@
-import { SearchBar } from "@components/SearchBar/SearchBar.jsx";
-import { ProductList } from "@components/ProductList/ProductList.jsx";
+import { SearchBar } from "@components/common/SearchBar/SearchBar.jsx";
+import { ProductList } from "@components/product/ProductList/ProductList.jsx";
 import { sampleProducts } from "../../constants.js";
 import { Page } from "@components/styledComponents.js";
-
 
 export const HomePage = () => {
     const handleSearch = (query) => {

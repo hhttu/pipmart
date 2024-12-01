@@ -7,4 +7,7 @@ export const styles = {
     title: {
         margin: 'auto 0',
     },
+    addButton: {
+        width: '170px',
+    }
 };

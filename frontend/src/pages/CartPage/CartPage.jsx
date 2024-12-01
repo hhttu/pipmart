@@ -1,8 +1,8 @@
 import { Page } from "@components/styledComponents.js";
 import { useUser } from "@context/UserContext.jsx";
 import { styles } from "@pages/CartPage/styles.js";
-import { CartItem } from "@components/CartItem/CartItem.jsx";
-import { CartSummary } from "@components/CartSummary/CartSummary.jsx";
+import { CartItem } from "@components/cart/CartItem/CartItem.jsx";
+import { CartSummary } from "@components/cart/CartSummary/CartSummary.jsx";
 import cartEmptyImage from "@assets/empty_cart.png";
 
 export const CartPage = () => {

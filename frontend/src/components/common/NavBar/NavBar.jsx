@@ -17,7 +17,7 @@ export const NavBar = () => {
     return (
         <nav style={styles.navbar}>
             <div>
-                <a href="/" style={styles.logoLink}>
+                <a href="/frontend/public" style={styles.logoLink}>
                     <img
                         src={logo}
                         alt="Logo"
@@ -39,7 +39,7 @@ export const NavBar = () => {
                     </a>
                 )}
                 {isLogin && (
-                    <a href="/" style={styles.link} onClick={handleLogOut}>
+                    <a href="/frontend/public" style={styles.link} onClick={handleLogOut}>
                         <FiLogOut style={styles.userLogo}/>
                         <StyledLinkSpan>Logout</StyledLinkSpan>
                     </a>

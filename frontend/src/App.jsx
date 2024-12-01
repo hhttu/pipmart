@@ -1,4 +1,4 @@
-import { NavBar } from "@components/NavBar/NavBar.jsx";
+import { NavBar } from "@components/common/NavBar/NavBar.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage/LoginPage.jsx";
 import { AccountPage } from "./pages/AccountPage/AccountPage.jsx";

@@ -4,7 +4,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { IoWarningOutline } from "react-icons/io5";
 import { Page, StyledLinkSpan } from "@components/styledComponents.js";
 import { styles } from "@pages/ProductDetailPage/styles.js";
-import { PriceDisplay } from "@components/PriceDisplay/PriceDisplay.jsx";
+import { PriceDisplay } from "@components/common/PriceDisplay/PriceDisplay.jsx";
 import { useState } from "react";
 import { useUser } from "@context/UserContext.jsx";
 

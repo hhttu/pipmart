@@ -1,6 +1,6 @@
-import { styles } from "@components/ProductCard/styles.js";
+import { styles } from "@components/product/ProductCard/styles.js";
 import { useNavigate } from "react-router-dom";
-import { PriceDisplay } from "@components/PriceDisplay/PriceDisplay.jsx";
+import { PriceDisplay } from "@components/common/PriceDisplay/PriceDisplay.jsx";
 import { StyledCard } from "@components/styledComponents.js";
 
 export const ProductCard = ({ product }) => {

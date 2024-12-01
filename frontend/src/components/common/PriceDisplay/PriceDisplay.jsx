@@ -1,4 +1,4 @@
-import { styles } from "@components/PriceDisplay/styles.js";
+import { styles } from "@components/common/PriceDisplay/styles.js";
 
 export const PriceDisplay = ({ isOnSale, price, salePrice }) => (
     <div>

@@ -1,4 +1,4 @@
-import { styles } from "@components/QuantityInput/styles.js";
+import { styles } from "@components/common/QuantityInput/styles.js";
 
 export const QuantityInput = ({item, onQuantityChange}) => {
     return (

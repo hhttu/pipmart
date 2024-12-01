@@ -1,4 +1,4 @@
-import { styles } from "@components/LoginInput/styles.js";
+import { styles } from "@components/common/LoginInput/styles.js";
 
 export const LoginInput = ({ icon: Icon, name, type, placeholder, value, onChange }) => {
     return (

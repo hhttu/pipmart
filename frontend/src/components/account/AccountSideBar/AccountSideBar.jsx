@@ -1,6 +1,6 @@
-import { styles } from "@components/AccountSideBar/styles.js";
+import { styles } from "@components/account/AccountSideBar/styles.js";
 import { useUser } from "@context/UserContext.jsx";
-import { users } from "../../constants.js";
+import { users } from "../../../constants.js";
 import { StyledLinkSpan } from "@components/styledComponents.js";
 import userLogo from "@assets/user-logo.jpg"
 

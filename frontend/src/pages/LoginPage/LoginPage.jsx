@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styles } from "./styles.js";
-import { LoginInput } from "@components/LoginInput/LoginInput.jsx";
+import { LoginInput } from "@components/common/LoginInput/LoginInput.jsx";
 import { FaLock, FaUser } from "react-icons/fa6";
 import { users } from "../../constants.js";
 import { useUser } from "@context/UserContext.jsx";

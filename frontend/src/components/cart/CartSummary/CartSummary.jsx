@@ -1,4 +1,4 @@
-import { styles } from "@components/CartSummary/styles.js";
+import { styles } from "@components/cart/CartSummary/styles.js";
 import { StyledCheckOutButton } from "@components/styledComponents.js";
 
 export const CartSummary = ({ isEmpty, subtotal, shipping }) => {

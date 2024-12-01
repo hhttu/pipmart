@@ -1,5 +1,5 @@
-import { styles } from "@components/CartItem/styles.js";
-import { QuantityInput } from "@components/QuantityInput/QuantityInput.jsx";
+import { styles } from "@components/cart/CartItem/styles.js";
+import { QuantityInput } from "@components/common/QuantityInput/QuantityInput.jsx";
 
 export const CartItem = ({ item, onQuantityChange, onRemove }) => {
     return (
