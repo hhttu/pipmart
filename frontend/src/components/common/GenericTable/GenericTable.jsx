@@ -2,7 +2,7 @@ import { styles } from "@components/common/GenericTable/styles.js";
 
 export const GenericTable = ({ headers, data, onRowClick }) => {
     return (
-        <div style={{ overflowX: "auto" }}>
+        <div style={styles.tableContainer}>
             <table style={styles.table}>
                 <thead>
                     <tr>
@@ -23,6 +23,7 @@ export const GenericTable = ({ headers, data, onRowClick }) => {
                             onClick={() => onRowClick && onRowClick(row)}
                             style={{
                                 cursor: onRowClick ? "pointer" : "default",
+                                borderBottom: "1px solid #e0e0e0",
                             }}
                         >
                             {Object.values(row).map((value, index) => (

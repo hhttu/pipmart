@@ -1,5 +1,6 @@
 import { StyledButton, StyledChip } from "@components/styledComponents.js";
 import { styles } from "@components/account/AccountOrders/styles.js";
+import { sampleProducts } from "../../../constants.js";
 
 export const formatOrderData = (orders, handleDetailClick) => {
     return orders.map((order) => ({
@@ -22,4 +23,8 @@ export const formatOrderData = (orders, handleDetailClick) => {
             </StyledButton>
         ),
     }));
+};
+
+export const getProductDetails = (productIds) => {
+    return sampleProducts.filter((product) => productIds.includes(product.id));
 };

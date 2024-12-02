@@ -80,7 +80,7 @@ export const Page = styled.div`
 `;
 
 export const AccountContent = styled.div`
-    width: 600px;
+    width: 640px;
     padding: 25px;
 `;
 
