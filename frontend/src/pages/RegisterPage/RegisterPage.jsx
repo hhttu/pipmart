@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { users } from "../../constants.js";
 import { styles } from "./styles.js";
-import { LoginInput } from "@components/common/LoginInput/LoginInput.jsx";
+import { GenericInput } from "@components/common/GenericInput/GenericInput.jsx";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa6";
 import { Page } from "@components/styledComponents.js";
 
@@ -45,21 +45,21 @@ export const RegisterPage = () => {
             <div style={styles.formContainer}>
                 <h2>Register</h2>
                 <form style={styles.form} onSubmit={handleSubmit}>
-                    <LoginInput
+                    <GenericInput
                         icon={FaUser}
                         name="name"
                         placeholder="Full Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <LoginInput
+                    <GenericInput
                         icon={FaUser}
                         name="username"
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <LoginInput
+                    <GenericInput
                         icon={FaEnvelope}
                         name="email"
                         type="email"
@@ -67,7 +67,7 @@ export const RegisterPage = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <LoginInput
+                    <GenericInput
                         icon={FaLock}
                         name="password"
                         type="password"

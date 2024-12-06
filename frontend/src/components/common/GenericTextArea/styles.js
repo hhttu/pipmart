@@ -9,16 +9,13 @@ export const styles = {
         backgroundColor: '#fff',
         boxShadow: '0 1px 4px rgba(0, 0, 0, 0.1)',
     },
-    icon: {
-        marginRight: '10px',
-        fontSize: '1.2em',
-        color: '#666',
-    },
     input: {
         border: 'none',
         outline: 'none',
         flex: 1,
         fontSize: '14px',
         color: '#333',
+        height: "60px",
+        fontFamily: "Inter",
     },
 };

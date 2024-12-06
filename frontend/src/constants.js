@@ -5,28 +5,28 @@ import sampleImage4 from "@assets/sample_product_4.jpg";
 
 export const users = [
     {
-        id: 1,
+        id: "1",
         name: 'John Doe',
         username: 'johndoe',
         password: 'password123',
         email: 'johndoe@example.com',
     },
     {
-        id: 2,
+        id: '2',
         name: 'Jane Smith',
         username: 'janesmith',
         password: 'mypassword456',
         email: 'janesmith@example.com',
     },
     {
-        id: 3,
+        id: '3',
         name: 'Alice Johnson',
         username: 'alicejohnson',
         password: 'securepassword789',
         email: 'alicejohnson@example.com',
     },
     {
-        id: 4,
+        id: '4',
         name: 'Tu Huynh',
         username: 'tuhuynh',
         password: 'abc',
@@ -73,6 +73,7 @@ export const sampleProducts = [
         title: 'Product 5',
         price: 89.99,
         isOnSale: false,
+        salePrice: null,
     },
     {
         id: 6,
@@ -88,6 +89,7 @@ export const sampleProducts = [
         title: 'Product 7',
         price: 150.0,
         isOnSale: false,
+        salePrice: null,
     },
     {
         id: 8,
@@ -111,6 +113,7 @@ export const sampleProducts = [
         title: 'Product 10',
         price: 60.0,
         isOnSale: false,
+        salePrice: null,
     },
     {
         id: 11,
@@ -126,12 +129,14 @@ export const sampleProducts = [
         title: 'Product 12',
         price: 130.0,
         isOnSale: false,
+        salePrice: null,
     },
 ];
 
 export const detailedProducts = [
     {
         id: 1,
+        seller: "4",
         image: sampleImage1,
         title: 'Product 1',
         description: 'A versatile and stylish item perfect for daily use.',
@@ -142,6 +147,7 @@ export const detailedProducts = [
     },
     {
         id: 2,
+        seller: "1",
         image: sampleImage2,
         title: 'Product 2',
         description: 'A durable product with premium quality materials.',
@@ -152,6 +158,7 @@ export const detailedProducts = [
     },
     {
         id: 3,
+        seller: "2",
         image: sampleImage3,
         title: 'Product 3',
         description: 'Compact and lightweight, ideal for travelers.',
@@ -162,6 +169,7 @@ export const detailedProducts = [
     },
     {
         id: 4,
+        seller: "3",
         image: sampleImage4,
         title: 'Product 4',
         description: 'Luxury product crafted for elegance and performance.',
@@ -172,6 +180,7 @@ export const detailedProducts = [
     },
     {
         id: 5,
+        seller: "2",
         image: sampleImage1,
         title: 'Product 5',
         description: 'An affordable option with exceptional value.',
@@ -182,6 +191,7 @@ export const detailedProducts = [
     },
     {
         id: 6,
+        seller: "1",
         image: sampleImage2,
         title: 'Product 6',
         description: 'High-quality item perfect for modern needs.',
@@ -192,6 +202,7 @@ export const detailedProducts = [
     },
     {
         id: 7,
+        seller: "3",
         image: sampleImage3,
         title: 'Product 7',
         description: 'Premium build and outstanding performance.',
@@ -202,6 +213,7 @@ export const detailedProducts = [
     },
     {
         id: 8,
+        seller: "3",
         image: sampleImage4,
         title: 'Product 8',
         description: 'Lightweight and easy to carry, ideal for quick tasks.',
@@ -212,6 +224,7 @@ export const detailedProducts = [
     },
     {
         id: 9,
+        seller: "2",
         image: sampleImage1,
         title: 'Product 9',
         description: 'A top-tier product offering unmatched quality.',
@@ -222,6 +235,7 @@ export const detailedProducts = [
     },
     {
         id: 10,
+        seller: "2",
         image: sampleImage2,
         title: 'Product 10',
         description: 'A simple and reliable choice for daily needs.',
@@ -232,6 +246,7 @@ export const detailedProducts = [
     },
     {
         id: 11,
+        seller: "1",
         image: sampleImage3,
         title: 'Product 11',
         description: 'An innovative product designed for efficiency.',
@@ -242,6 +257,7 @@ export const detailedProducts = [
     },
     {
         id: 12,
+        seller: "1",
         image: sampleImage4,
         title: 'Product 12',
         description: 'Engineered for long-lasting performance.',
@@ -253,4 +269,35 @@ export const detailedProducts = [
 ];
 
 export const cart = [];
+
+export const sampleMyProducts = [
+    {
+        id: 1,
+        image: sampleImage1,
+        title: 'Product 1',
+        description: 'A versatile and stylish item perfect for daily use.',
+        price: 120.0,
+        dateAdded: '2024-01-01',
+        status: "Sold",
+    },
+    {
+        id: 2,
+        image: sampleImage2,
+        title: 'Product 2',
+        description: 'A durable product with premium quality materials.',
+        price: 75.0,
+        dateAdded: '2024-01-05',
+        status: "On sale",
+    },
+    {
+        id: 3,
+        image: sampleImage3,
+        title: 'Product 3',
+        description: 'Compact and lightweight, ideal for travelers.',
+        price: 50.0,
+        dateAdded: '2024-01-10',
+        status: "Sold",
+    },
+];
+
 

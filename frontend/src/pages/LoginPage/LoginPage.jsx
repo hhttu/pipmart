@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styles } from "./styles.js";
-import { LoginInput } from "@components/common/LoginInput/LoginInput.jsx";
+import { GenericInput } from "@components/common/GenericInput/GenericInput.jsx";
 import { FaLock, FaUser } from "react-icons/fa6";
 import { users } from "../../constants.js";
 import { useUser } from "@context/UserContext.jsx";
@@ -38,14 +38,14 @@ export const LoginPage = () => {
             <div style={styles.formContainer}>
                 <h2>Login</h2>
                 <form style={styles.form} onSubmit={handleSubmit}>
-                    <LoginInput
+                    <GenericInput
                         icon={FaUser}
                         name="username"
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <LoginInput
+                    <GenericInput
                         icon={FaLock}
                         name="password"
                         type="password"

@@ -8,7 +8,15 @@ export const styles = {
         margin: 'auto 0',
         paddingBottom: '20px',
     },
-    addButton: {
-        width: '170px',
+    inputField: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: "5px",
+    },
+    button: {
+        width: "110px",
+    },
+    icon: {
+        marginRight: "5px",
     }
 };

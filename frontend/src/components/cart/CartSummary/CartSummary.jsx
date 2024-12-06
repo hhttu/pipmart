@@ -1,5 +1,5 @@
 import { styles } from "@components/cart/CartSummary/styles.js";
-import { StyledCheckOutButton } from "@components/styledComponents.js";
+import { StyledButton2 } from "@components/styledComponents.js";
 
 export const CartSummary = ({ isEmpty, subtotal, shipping }) => {
     const total = subtotal + shipping;
@@ -23,7 +23,7 @@ export const CartSummary = ({ isEmpty, subtotal, shipping }) => {
                 <span>Total:</span>
                 <span>${total.toFixed(2)}</span>
             </p>
-            <StyledCheckOutButton disabled={isEmpty} onClick={handleClick}>Check Out</StyledCheckOutButton>
+            <StyledButton2 disabled={isEmpty} onClick={handleClick}>Check Out</StyledButton2>
         </div>
     );
 };

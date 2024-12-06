@@ -10,7 +10,7 @@ export const AccountSideBar = ({option}) => {
     const navigate = useNavigate();
 
     // Will be replaced by API call
-    const user = users.find((p) => p.id === parseInt(userId, 10));
+    const user = users.find((p) => p.id === userId);
 
     const handleClick = (option) => {
         navigate(`/account/${option}`);

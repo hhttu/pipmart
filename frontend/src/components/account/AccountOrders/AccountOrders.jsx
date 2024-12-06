@@ -46,8 +46,6 @@ export const AccountOrders = () => {
         setSelectedOrder(null);
     };
 
-    //
-
     // Format the orders data for the table
     const tableData = formatOrderData(orders, handleDetailClick);
 

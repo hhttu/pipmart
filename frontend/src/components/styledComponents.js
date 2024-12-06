@@ -59,13 +59,13 @@ export const StyledButton = styled.button`
     }
 `
 
-export const StyledCheckOutButton = styled.button`
+export const StyledButton2 = styled.button`
     background-color: #C14859;
     color: #fff;
     border: none;
     padding: 10px 20px;
     width: ${({ width = '100%' }) => width};
-    margin-top: 20px;
+    margin-top: ${({ marginTop = null }) => marginTop};
     &:hover {
         background-color: #A33B49;
     }
@@ -80,7 +80,7 @@ export const Page = styled.div`
 `;
 
 export const AccountContent = styled.div`
-    width: 640px;
+    width: 700px;
     padding: 25px;
 `;
 
@@ -88,10 +88,9 @@ export const StyledChip = styled.div`
     display: inline-block;
     width: 75px;
     padding: 5px 10px;
-    border: 2px solid ${(props) => props.color || "#000"};
-    border-radius: 12px;
-    color: ${(props) => props.textcolor || "#000"};
-    background-color: ${(props) => props.backgroundColor || "#fff"};
+    border-radius: 16px;
+    color: ${(props) => props.color || "#000"};
+    background-color: ${(props) => props.backgroundcolor || "#AAAAAA"};
     font-weight: 500;
     text-align: center;
 `;
@@ -116,4 +115,16 @@ export const BackDrop = styled.div`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
+`;
+
+export const StyledSelect = styled.select`
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    font-family: "Inter", serif;
+    &:after {
+        padding: 5px;
+    }
 `;

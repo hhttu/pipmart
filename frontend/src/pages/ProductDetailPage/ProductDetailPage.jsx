@@ -1,22 +1,23 @@
 import { useParams } from "react-router-dom";
 import { detailedProducts } from "../../constants.js";
 import { FaAngleLeft } from "react-icons/fa6";
-import { IoWarningOutline } from "react-icons/io5";
 import { Page, StyledLinkSpan } from "@components/styledComponents.js";
 import { styles } from "@pages/ProductDetailPage/styles.js";
 import { PriceDisplay } from "@components/common/PriceDisplay/PriceDisplay.jsx";
 import { useState } from "react";
 import { useUser } from "@context/UserContext.jsx";
+import { WarningBox } from "@components/common/WarningBox/WarningBox.jsx";
 
 export const ProductDetailPage = () => {
     const { id } = useParams();
 
     const [ errorMessage, setErrorMessage ] = useState('');
     const [ quantity, setQuantity ] = useState(1);
-    const { isLogin, setCartList } = useUser();
+    const { userId, isLogin, setCartList } = useUser();
 
     // Will be replaced by API call
     const product = detailedProducts.find((p) => p.id === parseInt(id, 10));
+    const isSeller = product?.seller === userId;
 
     if (!product) {
         return (
@@ -42,6 +43,11 @@ export const ProductDetailPage = () => {
             return;
         }
 
+        if (isSeller) {
+            setErrorMessage("You cannot buy what you sell!");
+            return;
+        }
+
         // Proceed with adding to cart
         setCartList((prevCartList) => [
             ...prevCartList,
@@ -63,7 +69,14 @@ export const ProductDetailPage = () => {
 
                 <div style={styles.productInfo}>
                     <div style={styles.productHeader}>
-                        <h2 style={styles.productTitle}>{title}</h2>
+                        <div style={styles.titleContainer}>
+                            <h2 style={styles.productTitle}>{title}</h2>
+                            {isSeller && (
+                                <div style={styles.sellerChip}>
+                                    My selling product
+                                </div>
+                            )}
+                        </div>
                         <div style={styles.priceSection}>
                             <PriceDisplay price={price} isOnSale={isOnSale} salePrice={salePrice} />
                         </div>
@@ -83,10 +96,7 @@ export const ProductDetailPage = () => {
 
                     <button style={styles.addToCartButton} onClick={handleAddToCart}>Add to Bag</button>
                     {errorMessage && (
-                        <div style={styles.warningBox}>
-                            <IoWarningOutline style={styles.warningIcon} />
-                            {errorMessage}
-                        </div>
+                        <WarningBox errorMessage={errorMessage} />
                     )}
 
                     <div style={styles.productDetails}>

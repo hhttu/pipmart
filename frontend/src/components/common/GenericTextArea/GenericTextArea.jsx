@@ -1,16 +1,17 @@
-import { styles } from "@components/common/LoginInput/styles.js";
+import { styles } from "@components/common/GenericTextArea/styles.js";
 
-export const LoginInput = ({ icon: Icon, name, type, placeholder, value, onChange }) => {
+export const GenericTextArea = ({ name, type, placeholder, value, onChange, required }) => {
     return (
         <div style={styles.inputContainer}>
-            {Icon && <Icon style={styles.icon} />}
-            <input
+            <textarea
                 type={type}
                 name={name}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 style={styles.input}
+                required={required}
+
             />
         </div>
     );

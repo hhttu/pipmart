@@ -8,8 +8,8 @@ export const formatOrderData = (orders, handleDetailClick) => {
         "Order Number": order.orderNumber,
         Status: (
             <StyledChip
-                color={order.status === "Ordered" ? "orange" : "green"}
-                textcolor={order.status === "Ordered" ? "orange" : "green"}
+                color="#FFF"
+                backgroundcolor={order.status === "Ordered" ? "orange" : "green"}
             >
                 {order.status}
             </StyledChip>
