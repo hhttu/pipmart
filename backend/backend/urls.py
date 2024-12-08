@@ -32,6 +32,24 @@ urlpatterns = [
     path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),  # List and create items
     path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),  # Retrieve, update, or delete an item
     path('api/purchases/', pipmart_views.PurchaseListAPIView.as_view(), name='purchase-list'),  # List and create purchases
-    path('api/cart/', pipmart_views.CartAPIView.as_view(), name='cart'),  # Access user's cart
+    
 ]
 
+urlpatterns = [
+    # Item endpoints
+    path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),
+    path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),
+
+    # User endpoints
+    path('api/users/', pipmart_views.UserCreateAPIView.as_view(), name='user-create'),
+    path('api/users/<int:pk>/', pipmart_views.UserDetailAPIView.as_view(), name='user-detail'),
+    path('api/users/login/', pipmart_views.UserLoginAPIView.as_view(), name='user-login'),
+
+    # Purchase endpoints
+    path('api/purchases/<int:pk>/', pipmart_views.PurchaseDetailAPIView.as_view(), name='purchase-detail'),
+    path('api/purchases/', pipmart_views.PurchaseCreateAPIView.as_view(), name='purchase-create'),
+    path('api/order/', pipmart_views.UserOrderListAPIView.as_view(), name='user-order-list'),
+
+    #Cart
+    path('api/cart/', pipmart_views.CartAPIView.as_view(), name='cart'),  # Access user's cart
+]
