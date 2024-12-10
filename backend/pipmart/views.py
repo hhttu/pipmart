@@ -64,17 +64,22 @@ class UserCreateAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
+            password = request.data.get('password')
+
             user = serializer.save()
+            user.set_password(password)  # Hashes the password
+            user.save()
+
             token, created = Token.objects.get_or_create(user=user)  # Create a token for the user
             return Response({"token": token.key}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLoginAPIView(APIView):
     def post(self, request):
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
 
-        user = authenticate(username=email, password=password)  # Authenticate user by email and password
+        user = authenticate(username=username, password=password)  # Authenticate user by username and password
         if user:
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_200_OK)

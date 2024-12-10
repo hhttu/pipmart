@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'lecture6',
     'pipmart',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

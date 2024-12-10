@@ -27,15 +27,17 @@ from django.urls import path
 
 from pipmart import views as pipmart_views  # Import views from the pipmart app
 
-urlpatterns = [
-    path('admin/', admin.site.urls),  # Django admin panel
-    path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),  # List and create items
-    path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),  # Retrieve, update, or delete an item
-    path('api/purchases/', pipmart_views.PurchaseListAPIView.as_view(), name='purchase-list'),  # List and create purchases
-    
-]
+# urlpatterns = [
+#     path('admin/', admin.site.urls),  # Django admin panel
+#     path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),  # List and create items
+#     path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),  # Retrieve, update, or delete an item
+#     path('api/purchases/', pipmart_views.PurchaseListAPIView.as_view(), name='purchase-list'),  # List and create purchases
+#
+# ]
 
 urlpatterns = [
+    path('admin/', admin.site.urls),  # Django admin panel
+
     # Item endpoints
     path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),
     path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),
