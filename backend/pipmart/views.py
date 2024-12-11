@@ -119,6 +119,12 @@ class PurchaseCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PurchaseListAPIView(APIView):
+    def get(self, request):
+        purchases = Purchase.objects.all()  # Fetch all purchases
+        serializer = PurchaseSerializer(purchases, many=True)
+        return Response(serializer.data)
+
 class UserOrderListAPIView(APIView):
     def get(self, request):
         user_id = request.GET.get('user')
