@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
 from pipmart.models import Item, Purchase, Cart, User
 from pipmart.serializers import ItemSerializer, PurchaseSerializer, CartSerializer, UserSerializer
@@ -81,6 +81,7 @@ class UserLoginAPIView(APIView):
 
         user = authenticate(username=username, password=password)  # Authenticate user by username and password
         if user:
+            login(request, user)
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
@@ -94,12 +95,69 @@ class CartAPIView(APIView):
         serializer = CartSerializer(cart)
         return Response(serializer.data)
 
+    # Call when user add new item to the cart
     def post(self, request):
-        serializer = CartSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)  # Associate cart with the current user
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            cart, created = Cart.objects.get_or_create(user=request.user)  # Get or create the user's cart
+        except Cart.MultipleObjectsReturned:
+            return Response({"error": "Multiple carts found for user"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        item_id = request.data.get('item_id')  # Expecting 'item_id' in the request body
+        if not item_id:
+            return Response({"error": "Item ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            item = Item.objects.get(id=item_id)
+        except Item.DoesNotExist:
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if the item is already in the cart
+        if cart.items.filter(id=item.id).exists():
+            return Response({"error": "Item is already in the cart"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Add the item to the cart
+        cart.items.add(item)
+        cart.save()
+
+        serializer = CartSerializer(cart)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # Call when the user remove one item from the cart
+    def put(self, request):
+        try:
+            cart = Cart.objects.get(user=request.user)  # Get the cart for the logged-in user
+        except Cart.DoesNotExist:
+            return Response({"error": "Cart not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Extract item ID to remove from the request body
+        item_id = request.data.get("item_id")
+        if not item_id:
+            return Response({"error": "Item ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        print(cart.items)
+        try:
+            item = cart.items.get(id=item_id)
+        except Item.DoesNotExist:
+            return Response({"error": "Item not found in the cart"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Remove the item from the cart
+        cart.items.remove(item)
+        cart.save()
+
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+    # Call when the user remove the last item from the cart or finish purchase
+    def delete(self, request):
+        try:
+            cart = Cart.objects.get(user=request.user)  # Get the cart for the logged-in user
+        except Cart.DoesNotExist:
+            return Response({"error": "Cart not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Clear the cart
+        cart.delete()
+
+        return Response({"message": "Cart cleared successfully"}, status=status.HTTP_200_OK)
     
 class PurchaseDetailAPIView(APIView):
     def get(self, request, pk):

@@ -16,7 +16,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    items = ItemSerializer(many=True)
+    items = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all(), many=True)
 
     class Meta:
         model = Cart
