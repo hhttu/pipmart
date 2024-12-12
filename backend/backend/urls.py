@@ -36,8 +36,9 @@ from pipmart import views as pipmart_views  # Import views from the pipmart app
 # ]
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Django admin panel
-
+    path('', pipmart_views.landing_page, name='landing_page'),  # Landing page
+    path('populate_db/', pipmart_views.populate_db, name='populate_db'),  # Use pipmart_views.populate_db
+    
     # Item endpoints
     path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),
     path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),

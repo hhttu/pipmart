@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lecture6',
     'pipmart',
     'rest_framework',
     'rest_framework.authtoken',

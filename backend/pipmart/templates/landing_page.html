@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landing Page</title>
+</head>
+<body>
+    <h1>Welcome to the Landing Page!</h1>
+
+    <!-- Button to trigger the population -->
+    <form method="POST" action="{% url 'populate_db' %}">
+        {% csrf_token %}
+        <button type="submit">Populate Database</button>
+    </form>
+
+    <!-- Display success message if available -->
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

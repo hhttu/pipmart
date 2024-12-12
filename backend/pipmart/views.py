@@ -5,6 +5,47 @@ from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
 from pipmart.models import Item, Purchase, Cart, User
 from pipmart.serializers import ItemSerializer, PurchaseSerializer, CartSerializer, UserSerializer
+from django.shortcuts import render
+from django.http import JsonResponse
+import random
+
+def populate_db(request):
+    # Clear existing data
+    User.objects.all().delete()
+    Item.objects.all().delete()
+
+    # Create 6 users
+    for i in range(1, 7):
+        user = User.objects.create_user(
+            username=f"testuser{i}",
+            password=f"pass{i}",
+            email=f"testuser{i}@shop.aa"
+        )
+
+        # Create 10 items for the sellers (users 1, 2, and 3)
+        if i <= 3:  # sellers are users 1, 2, and 3
+            for j in range(10):
+                Item.objects.create(
+                    title=f"Item {i * 10 + j}",
+                    description=f"Description for Item {i * 10 + j}",
+                    price=random.randint(10, 100),
+                    status="on-sale",  # Default status
+                    owner=user
+                )
+
+    # Return a success message as JsonResponse (optional for debugging)
+    return JsonResponse({"message": "Database populated successfully!"})
+
+def landing_page(request):
+    if request.method == "POST" and request.user.is_anonymous:
+        # Trigger the populate_db view logic
+        populate_db(request)
+
+        # Set a success message using Django messages framework
+        messages.success(request, "Database populated successfully with 6 users and 30 items!")
+        return render(request, 'landing_page.html')  # Render the template with the success message
+
+    return render(request, 'landing_page.html')  # Default rendering of the pa
 
 class ItemListAPIView(APIView):
     def get(self, request):
@@ -198,6 +239,10 @@ class PurchaseCreateAPIView(APIView):
         serializer = PurchaseSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(buyer=request.user)
+            items = serializer.validated_data['items']
+            for item in items:
+                item.status = 'sold'
+                item.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

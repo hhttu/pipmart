@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
                         primary_key=True,
                         serialize=False,
                         verbose_name="ID",
-                    ),
+                    )
                 ),
                 (
                     "items",
