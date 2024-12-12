@@ -85,6 +85,30 @@ class UserLoginAPIView(APIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class ChangePasswordAPIView(APIView):
+     def post(self, request):
+        user = request.user  # Get the authenticated user
+        
+        if user.is_anonymous:  # If the user is not authenticated
+            return Response({"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        current_password = request.data.get('current_password')
+        new_password = request.data.get('new_password')
+
+        # Validate current password
+        if not user.check_password(current_password):
+            return Response({"error": "Current password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate new password is provided
+        if not new_password:
+            return Response({"error": "New password cannot be empty"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Set the new password
+        user.set_password(new_password)
+        user.save()
+
+        return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
 
 class CartAPIView(APIView):
     def get(self, request):
