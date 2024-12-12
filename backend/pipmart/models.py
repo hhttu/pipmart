@@ -27,8 +27,8 @@ class Cart(models.Model):
 
 class Purchase(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='purchases')
+    items = models.ManyToManyField('Item', related_name='purchases')
     date_purchased = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.item.title} purchased by {self.buyer.username}"
+        return f"Purchase by {self.buyer.username} on {self.date_purchased.strftime('%Y-%m-%d %H:%M:%S')}"

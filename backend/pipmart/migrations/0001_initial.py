@@ -74,12 +74,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "item",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="purchases",
-                        to="pipmart.item",
-                    ),
+                    "items",
+                    models.ManyToManyField(related_name="purchases", to="pipmart.item")
                 ),
             ],
         ),

@@ -24,8 +24,7 @@ class CartSerializer(serializers.ModelSerializer):
 
 class PurchaseSerializer(serializers.ModelSerializer):
     buyer = UserSerializer(read_only=True)
-    item = ItemSerializer(read_only=True)
-
+    items = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all(), many=True)
     class Meta:
         model = Purchase
-        fields = ['id', 'buyer', 'item', 'date_purchased']
+        fields = ['id', 'buyer', 'items', 'date_purchased']
