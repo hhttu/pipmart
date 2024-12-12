@@ -185,12 +185,10 @@ class PurchaseListAPIView(APIView):
 
 class UserOrderListAPIView(APIView):
     def get(self, request):
-        user_id = request.GET.get('user')
-        try:
-            user = User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-        purchases = Purchase.objects.filter(buyer=user)  # List purchases for a specific user
+        if not request.user.is_authenticated:
+            return Response({"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Fetch purchases for the authenticated user
+        purchases = Purchase.objects.filter(buyer=request.user)
         serializer = PurchaseSerializer(purchases, many=True)
         return Response(serializer.data)
