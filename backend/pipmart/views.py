@@ -238,11 +238,27 @@ class PurchaseCreateAPIView(APIView):
     def post(self, request):
         serializer = PurchaseSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(buyer=request.user)
             items = serializer.validated_data['items']
+
+            # Check for items that are already sold
+            sold_items = [item for item in items if item.status == 'sold']
+
+            if sold_items:
+                sold_item_titles = [item.title for item in sold_items]
+                return Response(
+                    {
+                        "error": "Some items have already been purchased.",
+                        "sold_items": sold_item_titles,
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # If no sold items, proceed to create the purchase
+            purchase = serializer.save(buyer=request.user)
             for item in items:
                 item.status = 'sold'
                 item.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
