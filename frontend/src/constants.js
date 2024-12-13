@@ -3,6 +3,8 @@ import sampleImage2 from "@assets/sample_product_2.jpg";
 import sampleImage3 from "@assets/sample_product_3.jpg";
 import sampleImage4 from "@assets/sample_product_4.jpg";
 
+export const API_HOST = 'http://localhost:8000'
+
 export const users = [
     {
         id: "1",

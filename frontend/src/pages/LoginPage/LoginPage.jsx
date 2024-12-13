@@ -8,28 +8,24 @@ import { useUser } from "@context/UserContext.jsx";
 import { Page } from "@components/styledComponents.js";
 
 export const LoginPage = () => {
-    const { setUserId, setIsLogin } = useUser();
+    const { handleLogin } = useUser();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Login clicked");
-        console.log(username);
-        console.log(password);
-        const user = users.find((user) => user.username === username && user.password === password);
 
-        if (user) {
-            // If user is found, navigate to the home page
-            setIsLogin(true);
-            setUserId(user.id);
+        const message = await handleLogin(username, password);
+
+        if (message === '') {
             navigate('/home');
         } else {
             // Show error if credentials are incorrect
-            setErrorMessage('Invalid username or password');
+            setErrorMessage(message);
         }
     };
 

@@ -50,11 +50,11 @@ def landing_page(request):
 class ItemListAPIView(APIView):
     def get(self, request):
         items = Item.objects.all()  # Get all items
-        serializer = ItemSerializer(items, many=True)
+        serializer = ItemSerializer(items, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ItemSerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(owner=request.user)  # Assuming the item owner is the logged-in user
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -67,7 +67,7 @@ class ItemDetailAPIView(APIView):
         except Item.DoesNotExist:
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = ItemSerializer(item)
+        serializer = ItemSerializer(item, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):

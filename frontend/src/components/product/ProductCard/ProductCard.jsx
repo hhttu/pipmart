@@ -1,10 +1,11 @@
 import { styles } from "@components/product/ProductCard/styles.js";
 import { useNavigate } from "react-router-dom";
-import { PriceDisplay } from "@components/common/PriceDisplay/PriceDisplay.jsx";
 import { StyledCard } from "@components/styledComponents.js";
+import { ColorSquare } from "@components/common/ColorSquare/ColorSquare.jsx";
+import { SellerChip } from "@components/common/SellerChip/SellerChip.jsx";
 
 export const ProductCard = ({ product }) => {
-    const { id, image, title, price, isOnSale, salePrice } = product;
+    const { id, title, price, is_owner } = product;
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -13,11 +14,17 @@ export const ProductCard = ({ product }) => {
 
     return (
         <StyledCard onClick={handleClick}>
-            <img src={image} alt={title} style={styles.image} />
-            <div style={styles.info}>
-                <h3 style={styles.name}>{title}</h3>
-                <div style={styles.priceSection}>
-                    <PriceDisplay price={price} isOnSale={isOnSale} salePrice={salePrice} />
+            <ColorSquare alt={title} styles={styles.image} />
+            <div style={ styles.info }>
+                <div style={ styles.titleContainer }>
+                    <h3 style={ styles.title }>{ title }</h3>
+                    { is_owner && (
+                        <SellerChip/>
+                    ) }
+                </div>
+
+                <div style={ styles.priceSection }>
+                    <span style={ styles.price }>€{ price.toFixed(2) }</span>
                 </div>
             </div>
         </StyledCard>

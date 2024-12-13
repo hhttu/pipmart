@@ -1,28 +1,41 @@
 import { useParams } from "react-router-dom";
-import { detailedProducts } from "../../constants.js";
 import { FaAngleLeft } from "react-icons/fa6";
 import { Page, StyledLinkSpan } from "@components/styledComponents.js";
 import { styles } from "@pages/ProductDetailPage/styles.js";
-import { PriceDisplay } from "@components/common/PriceDisplay/PriceDisplay.jsx";
-import { useState } from "react";
-import { useUser } from "@context/UserContext.jsx";
+import { useEffect, useState } from "react";
 import { WarningBox } from "@components/common/WarningBox/WarningBox.jsx";
+import { SellerChip } from "@components/common/SellerChip/SellerChip.jsx";
+import { useUser } from "@context/UserContext.jsx";
+import { getItemById } from "@api";
+import { ColorSquare } from "@components/common/ColorSquare/ColorSquare.jsx";
 
 export const ProductDetailPage = () => {
     const { id } = useParams();
 
+    const [ product, setProduct ] = useState(null);
     const [ errorMessage, setErrorMessage ] = useState('');
-    const [ quantity, setQuantity ] = useState(1);
-    const { userId, isLogin, setCartList } = useUser();
+    const { token, handlePostCart } = useUser();
 
-    // Will be replaced by API call
-    const product = detailedProducts.find((p) => p.id === parseInt(id, 10));
-    const isSeller = product?.seller === userId;
+    useEffect(() => {
+        const getProductById = async () => {
+            try {
+                const item = await getItemById(token, id);
+                console.log(item);
+
+                setProduct(item);
+            } catch (error) {
+                console.error(error.message);
+                setProduct(null);
+            }
+        }
+
+        getProductById();
+    }, [token]);
 
     if (!product) {
         return (
             <Page>
-                <div>Product not found!</div>
+                <h3>Product not found!</h3>
             </Page>
         );
     }
@@ -31,29 +44,27 @@ export const ProductDetailPage = () => {
         title,
         description,
         price,
-        isOnSale,
-        salePrice,
-        dateAdded,
-        image,
+        date_added,
+        is_owner,
     } = product;
 
-    const handleAddToCart = () => {
-        if (!isLogin) {
+    const handleAddToCart = async () => {
+        if (!token) {
             setErrorMessage('You must log in to add items to the cart!');
             return;
         }
 
-        if (isSeller) {
+        if (is_owner) {
             setErrorMessage("You cannot buy what you sell!");
             return;
         }
-
         // Proceed with adding to cart
-        setCartList((prevCartList) => [
-            ...prevCartList,
-            { ...product, quantity }
-        ]);
-        alert('Item added to cart!');
+        const message = await handlePostCart(id);
+        if (message === '') {
+            alert('Item added to cart!');
+        } else {
+            setErrorMessage(message);
+        }
     };
 
     return (
@@ -65,33 +76,19 @@ export const ProductDetailPage = () => {
                 </a>
             </div>
             <div style={styles.productContainer}>
-                <img src={image} alt={title} style={styles.mainImage}/>
+                <ColorSquare alt={title} styles={styles.mainImage}/>
 
                 <div style={styles.productInfo}>
                     <div style={styles.productHeader}>
                         <div style={styles.titleContainer}>
                             <h2 style={styles.productTitle}>{title}</h2>
-                            {isSeller && (
-                                <div style={styles.sellerChip}>
-                                    My selling product
-                                </div>
+                            {is_owner && (
+                                <SellerChip />
                             )}
                         </div>
-                        <div style={styles.priceSection}>
-                            <PriceDisplay price={price} isOnSale={isOnSale} salePrice={salePrice} />
+                        <div style={ styles.priceSection }>
+                            <span style={ styles.price }>€{ price.toFixed(2) }</span>
                         </div>
-                    </div>
-
-                    <div style={styles.quantitySection}>
-                        <span>Quantity: </span>
-                        <input
-                            type="number"
-                            id="quantity"
-                            style={styles.quantityInput}
-                            min="1"
-                            value={quantity}
-                            onChange={(e) => setQuantity(Number(e.target.value))}
-                        />
                     </div>
 
                     <button style={styles.addToCartButton} onClick={handleAddToCart}>Add to Bag</button>
@@ -103,7 +100,7 @@ export const ProductDetailPage = () => {
                         <h3 style={styles.detailsTitle}>Details</h3>
                         <p>
                             <strong>Added Date:</strong>{' '}
-                            {new Date(dateAdded).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                            {new Date(date_added).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}
                         </p>
                         <p>
                             <strong>Description:</strong> {description}

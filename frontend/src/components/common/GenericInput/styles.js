@@ -2,13 +2,15 @@ export const styles = {
     inputContainer: {
         display: 'flex',
         alignItems: 'center',
-        borderRadius: '10px',
         marginBottom: '15px',
         backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        borderRadius: '10px',
         boxShadow: '0 1px 4px rgba(0, 0, 0, 0.1)',
+        paddingLeft: '15px',
     },
     icon: {
-        marginRight: '10px',
+        marginRight: '15px',
         fontSize: '1.2em',
         color: '#666',
     },
@@ -18,8 +20,8 @@ export const styles = {
         fontSize: '14px',
         color: '#333',
         fontFamily: "Inter",
-        border: '1px solid #ccc',
-        borderRadius: '10px',
         padding: '10px 15px',
+        border: 'none',
+        borderRadius: '0 10px 10px 0',
     },
 };

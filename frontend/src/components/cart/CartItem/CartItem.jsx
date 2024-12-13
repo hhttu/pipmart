@@ -1,7 +1,6 @@
 import { styles } from "@components/cart/CartItem/styles.js";
-import { QuantityInput } from "@components/common/QuantityInput/QuantityInput.jsx";
 
-export const CartItem = ({ item, onQuantityChange, onRemove }) => {
+export const CartItem = ({ item, onRemove }) => {
     return (
         <div style={styles.container}>
             <img src={item.image} alt={item.title} style={styles.image} />
@@ -11,7 +10,6 @@ export const CartItem = ({ item, onQuantityChange, onRemove }) => {
                     <p>${item.price}</p>
                 </div>
                 <div style={styles.modificationSection}>
-                    <QuantityInput item={item} onQuantityChange={onQuantityChange} />
                     <button style={styles.button} onClick={() => onRemove(item.id)}>
                         Remove
                     </button>

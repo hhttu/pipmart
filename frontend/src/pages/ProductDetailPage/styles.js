@@ -19,29 +19,21 @@ export const styles = {
         margin: "0 auto",
     },
     mainImage: {
-        maxWidth: "100%",
-        maxHeight: "400px",
+        width: "400px",
+        height: "400px",
         border: "1px solid #ccc",
-        margin: "0 20px",
+        margin: "0 30px",
     },
     productInfo: {
         flex: 2,
         display: "flex",
         flexDirection: "column",
+        width: "450px",
     },
     titleContainer: {
         display: "flex",
         gap: "15px",
         alignItems: "center",
-    },
-    sellerChip: {
-        display: "inline-block",
-        padding: "3px 10px",
-        borderRadius: "16px",
-        backgroundColor: "#51924F",
-        color: "#FFF", 
-        fontWeight: 500,
-        textAlign: "center",
     },
     productHeader: {
         marginBottom: "10px",
@@ -53,18 +45,9 @@ export const styles = {
     priceSection: {
         margin: "10px 0",
     },
-    quantitySection: {
-        display: "flex",
-        alignItems: "center",
-        margin: "15px 0",
-    },
-    quantityInput: {
-        width: "50px",
-        textAlign: "center",
-        margin: "0 10px",
-        padding: "6px",
-        border: "1px solid #ccc",
-        borderRadius: "6px",
+    price: {
+        fontWeight: 'bold',
+        color: '#000',
     },
     addToCartButton: {
         padding: "12px",

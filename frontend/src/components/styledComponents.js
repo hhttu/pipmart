@@ -23,6 +23,7 @@ export const StyledCard = styled.div`
     border-radius: 10px;
     padding-bottom: 15px;
     width: 250px;
+    height: 320px;
     text-align: center;
     background-color: #FFF;
     cursor: pointer;

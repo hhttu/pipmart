@@ -9,15 +9,26 @@ export const styles = {
     info: {
         width: '100%',
     },
-    name: {
+    titleContainer: {
+        display: "flex",
+        flexDirection: 'column',
+        gap: "5px",
+        alignItems: "center",
+    },
+    title: {
+        margin: '10px auto 0',
         fontSize: '16px',
-        margin: '10px 0',
         color: '#333',
     },
     priceSection: {
+        marginTop: '10px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         gap: '10px',
+    },
+    price: {
+        color: '#C14859',
+        fontWeight: 'bold',
     },
 };

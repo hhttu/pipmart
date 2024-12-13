@@ -8,11 +8,17 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'password']
 
 class ItemSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(read_only=True)
+    is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
-        fields = ['id', 'title', 'description', 'price', 'date_added', 'status', 'owner']
+        fields = ['id', 'title', 'description', 'price', 'date_added', 'status', 'is_owner']
+
+    def get_is_owner(self, obj):
+        request = self.context.get('request', None)
+        if request and hasattr(request, 'user'):
+            return obj.owner == request.user
+        return False
 
 class CartSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
