@@ -5,7 +5,13 @@ from .models import Item, Cart, Purchase
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['username', 'email']
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if 'password' in representation:
+            del representation['password']
+        
+        return representation
 
 class ItemSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()

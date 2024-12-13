@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
 from pipmart.models import Item, Purchase, Cart, User
@@ -92,11 +93,14 @@ class ItemDetailAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class UserDetailAPIView(APIView):
-    def get(self, request, pk):
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def get(self, request):
+        # `request.user` contains the user associated with the token
+        user = request.user
+
+        if not user.is_authenticated:
+            return Response({"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
         
         serializer = UserSerializer(user)
         return Response(serializer.data)
