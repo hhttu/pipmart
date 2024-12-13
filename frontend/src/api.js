@@ -2,7 +2,7 @@ import { API_HOST } from "./constants.js";
 
 export const fetchUserDetails = async (authToken) => {
     try {
-        const response = await fetch('${API_HOST}/api/users/', {
+        const response = await fetch(`${API_HOST}/api/users/details`, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${authToken}`,
@@ -10,7 +10,8 @@ export const fetchUserDetails = async (authToken) => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch user details');
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
         return await response.json();
@@ -78,6 +79,40 @@ export const postCart = async (authToken, item_id) => {
             'Authorization': `Token ${authToken}`,
         },
         body: JSON.stringify({ item_id }),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+};
+
+export const putCart = async (authToken, item_id) => {
+    const response = await fetch(`${API_HOST}/api/cart/`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify({ item_id }),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+};
+
+export const deleteCart = async (authToken) => {
+    const response = await fetch(`${API_HOST}/api/cart/`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Token ${authToken}`,
+        },
     });
 
     if (!response.ok) {

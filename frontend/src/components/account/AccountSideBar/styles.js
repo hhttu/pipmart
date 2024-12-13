@@ -24,6 +24,10 @@ export const styles = {
     email: {
         margin: "auto 0"
     },
+    button: {
+        marginTop: "10px",
+        width: "180px",
+    },
     nav: {
         marginTop: "20px"
     },

@@ -5,38 +5,28 @@ import { styles } from "./styles.js";
 import { GenericInput } from "@components/common/GenericInput/GenericInput.jsx";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa6";
 import { Page } from "@components/styledComponents.js";
+import { registerUser } from "@api";
+import { useUser } from "@context/UserContext.jsx";
 
 export const RegisterPage = () => {
-    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const { handleRegister } = useUser();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if username or email already exists
-        const userExists = users.find(
-            (user) => user.username === username || user.email === email
-        );
+        const message = await handleRegister(username, email, password);
 
-        if (userExists) {
-            setErrorMessage('Username or email already exists');
-        } else {
-            // Add the new user to the array (change to API call after)
-            const newUser = {
-                id: users.length + 1,
-                name,
-                username,
-                password,
-                email,
-            };
-            users.push(newUser);
-
+        if (message === '') {
             alert("User registered successfully.");
-            navigate('/login');
+            navigate('/');
+        } else {
+            setErrorMessage(message);
         }
     };
 
@@ -45,13 +35,6 @@ export const RegisterPage = () => {
             <div style={styles.formContainer}>
                 <h2>Register</h2>
                 <form style={styles.form} onSubmit={handleSubmit}>
-                    <GenericInput
-                        icon={FaUser}
-                        name="name"
-                        placeholder="Full Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
                     <GenericInput
                         icon={FaUser}
                         name="username"

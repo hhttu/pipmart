@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { getCart, loginUser, postCart } from "@api";
+import { deleteCart, fetchUserDetails, getCart, loginUser, postCart, putCart, registerUser } from "@api";
 
 const UserContext = createContext();
 
@@ -17,6 +17,29 @@ export const UserProvider = ({ children }) => {
             return [];
         }
     });
+
+    const handleGetUserDetails = async () => {
+        try {
+            return await fetchUserDetails(token);
+        } catch (error) {
+            console.error("Get user details failed:", error.message);
+            return null;
+        }
+    }
+
+    const handleRegister = async (username, email, password) => {
+        try {
+            const { token: authToken } = await registerUser(username, email, password);
+            setToken(authToken);
+
+            return '';
+        } catch (error) {
+            console.error("Register failed:", error.message);
+            setToken(null);
+
+            return error.message;
+        }
+    };
 
     const handleLogin = async (username, password) => {
         try {
@@ -63,6 +86,30 @@ export const UserProvider = ({ children }) => {
         }
     }
 
+    const handleRemoveCartItem = async (item_id) => {
+        try {
+            const { items } = await putCart(token, item_id);
+            setCartList(items);
+
+            return '';
+        } catch (error) {
+            console.error("Remove item failed: ", error.message);
+            return error.message;
+        }
+    }
+
+    const handleDeleteCart = async () => {
+        try {
+            await deleteCart(token);
+            setCartList([]);
+
+            return '';
+        } catch (error) {
+            console.error("Delete cart failed: ", error.message);
+            return error.message;
+        }
+    }
+
     useEffect(() => {
         if (token) {
             Cookies.set('authToken', token, { expires: 1 });
@@ -80,7 +127,7 @@ export const UserProvider = ({ children }) => {
     }, [cartList]);
 
     return (
-        <UserContext.Provider value={{ token, setToken, cartList, setCartList, handleLogin, handleLogout, handleGetCart, handlePostCart }}>
+        <UserContext.Provider value={{ token, setToken, cartList, setCartList, handleGetUserDetails, handleLogin, handleRegister, handleLogout, handleGetCart, handlePostCart, handleRemoveCartItem, handleDeleteCart }}>
             {children}
         </UserContext.Provider>
     );

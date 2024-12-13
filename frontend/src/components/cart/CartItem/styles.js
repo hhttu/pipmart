@@ -8,15 +8,14 @@ export const styles = {
         height: "150px",
     },
     image: {
-        height: "100%",
-        width: "auto",
+        height: "150px",
+        width: "150px",
     },
     details: {
         margin: "0 20px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        width: "100%",
         height: "100%",
     },
     title: {
@@ -33,6 +32,6 @@ export const styles = {
         border: "none",
         textDecoration: "underline",
         cursor: "pointer",
-        padding: "5px 10px",
+        padding: "5px 0",
     },
 };

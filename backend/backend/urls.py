@@ -28,7 +28,7 @@ urlpatterns = [
 
     # User endpoints
     path('api/users/', pipmart_views.UserCreateAPIView.as_view(), name='user-create'),
-    path('api/users/<int:pk>/', pipmart_views.UserDetailAPIView.as_view(), name='user-detail'),
+    path('api/users/details/', pipmart_views.UserDetailAPIView.as_view(), name='user-detail'),
     path('api/users/login/', pipmart_views.UserLoginAPIView.as_view(), name='user-login'),
     path('api/users/change-password/', pipmart_views.ChangePasswordAPIView.as_view(), name='change-password'),
 
