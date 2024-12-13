@@ -16,24 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-# from lecture6 import views as l6views
-
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),   
-#     path('api/cards/', l6views.CardListAPIView.as_view(), name='card-list'),
-#     path('api/cards/<int:pk>/',l6views.CardDetailAPIView.as_view(), name='card-detail')
-# ]
-
-from pipmart import views as pipmart_views  # Import views from the pipmart app
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),  # Django admin panel
-#     path('api/items/', pipmart_views.ItemListAPIView.as_view(), name='item-list'),  # List and create items
-#     path('api/items/<int:pk>/', pipmart_views.ItemDetailAPIView.as_view(), name='item-detail'),  # Retrieve, update, or delete an item
-#     path('api/purchases/', pipmart_views.PurchaseListAPIView.as_view(), name='purchase-list'),  # List and create purchases
-#
-# ]
+from pipmart import views as pipmart_views 
 
 urlpatterns = [
     path('', pipmart_views.landing_page, name='landing_page'),  # Landing page
