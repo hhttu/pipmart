@@ -243,9 +243,10 @@ class PurchaseCreateAPIView(APIView):
         serializer = PurchaseSerializer(data=request.data)
         if serializer.is_valid():
             items = serializer.validated_data['items']
+            existing_items = Item.objects.filter(id__in=[item.id for item in items])
 
             # Check for items that are already sold
-            sold_items = [item for item in items if item.status == 'sold']
+            sold_items = [item for item in existing_items if item.status == 'sold']
 
             if sold_items:
                 sold_item_titles = [item.title for item in sold_items]
@@ -255,6 +256,18 @@ class PurchaseCreateAPIView(APIView):
                         "sold_items": sold_item_titles,
                     },
                     status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # Check if the price of the items in the cart hasn't changed
+            changed_prices = [item for item in existing_items if item.price != next((i.price for i in items if i.id == item.id), None)]
+
+            if changed_prices:
+                return Response(
+                    {
+                        "error": "The price of some items has changed.",
+                        "changed_items": [{"id": item.id, "price": item.price} for item in changed_prices],
+                    },
+                    status=status.HTTP_409_CONFLICT,
                 )
 
             # If no sold items, proceed to create the purchase
