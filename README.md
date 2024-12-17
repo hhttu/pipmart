@@ -5,18 +5,76 @@ PipMart is a full-stack application that allows users to create, manage, and pur
 
 ## Features
 
-- **Backend (Django REST Framework)**:
-  - User registration, login, and authentication.
-  - CRUD operations for items (create, retrieve, update, delete).
-  - Search functionality for items by title.
-  - Purchase management with item status updates.
-  - Automatic database population for testing.
+#### **Mandatory Features**
 
-- **Frontend (React + Vite)**:
-  - User interface for interacting with the backend.
-  - Display of all items with search functionality.
-  - User login and authentication using tokens.
-  - Purchase items with validation checks.
+1. **User Accounts**  
+   - Unregistered users can browse and search available items.  
+   - Registered users can create accounts, authenticate via login, and manage their items.
+
+2. **Backend API**  
+   - A Django-based API serves JSON data for the web shop and HTML for the landing page.  
+   - SQLite is used as the database.
+
+3. **Frontend Interface**  
+   - A dynamic, responsive user interface implemented using React.
+
+4. **Automatic Database Population**  
+   - A link allows any visitor to auto-populate the database with **6 users** (3 sellers and 10 items each).  
+   - The database resets before each re-population.
+
+5. **Browse Items**  
+   - Any user can browse all available items for sale.  
+   - Each item includes:  
+      - Title  
+      - Description  
+      - Price  
+      - Date Added  
+
+6. **Account Management**  
+   - Users can **sign up** with a username, password, and email.  
+   - Registered users can **log in** to access personalized features.
+
+7. **Add New Items**  
+   - Authenticated users can list new items for sale with a title, description, and price.
+
+8. **Add to Cart**  
+   - Buyers can add items to their cart for purchase.  
+   - Sellers cannot add their own items to the cart.
+
+#### **Optional Features**
+
+1. **Search Functionality**  
+   - Users can search for items by title.
+
+2. **Remove Items from Cart**  
+   - Buyers can remove items from their cart.
+
+3. **Payment Processing**  
+   - Cart transactions halt if item prices change or items are no longer available.  
+   - Successful payment marks items as **SOLD** and updates their status.
+
+4. **SPA (Single Page Application) Routing**  
+   - The application supports navigation to key pages:  
+     - Home: `/`  
+     - Sign Up: `/signup`  
+     - Login: `/login`  
+     - Edit Account: `/account`  
+     - My Items: `/myitems`  
+
+5. **Account Editing**  
+   - Users can update their account password.
+
+6. **Inventory Management**  
+   - Authenticated users can view items categorized into:  
+      - On Sale  
+      - Sold  
+      - Purchased  
+
+7. **Edit Items**  
+   - Sellers can edit the price of their items as long as they are available.
+
+8. **Responsive Design**  
+   - The web application is designed for a clean and user-friendly experience on desktop screens.
 
 
 ## Technologies Used
