@@ -1,13 +1,12 @@
 import { AccountContent, BackDrop, PopUpDialog, StyledButton, StyledButton2 } from "@components/styledComponents.js";
 import { styles } from "@components/account/AccountProducts/styles.js";
-import { sampleMyProducts } from "../../../constants.js";
-import { useState } from "react";
-import sampleImage2 from "@assets/sample_product_2.jpg";
+import { useEffect, useState } from "react";
 import { GenericInput } from "@components/common/GenericInput/GenericInput.jsx";
 import { formatProductData } from "@components/account/AccountProducts/accountProductsUtils.jsx";
 import { GenericTable } from "@components/common/GenericTable/GenericTable.jsx";
 import { GenericTextArea } from "@components/common/GenericTextArea/GenericTextArea.jsx";
-import { GenericSelection } from "@components/common/GenericSelection/GenericSelection.jsx";
+import { useUser } from "@context/UserContext.jsx";
+import { getItems, postItem } from "@api";
 
 const headers = [
     { label: "Date added", width: "20%" },
@@ -18,18 +17,37 @@ const headers = [
 ];
 
 export const AccountProducts = () => {
-    // const {userId} = useUser();
+    const {token} = useUser();
 
-    const [products, setProducts] = useState(sampleMyProducts);
+    const [products, setProducts] = useState([]);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(false);
     const [isAddProductOpen, setIsAddProductOpen] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
         price: "",
         description: "",
-        status: "On sale",
     });
 
     const [selectedProduct, setSelectedProduct] = useState(null);
+
+    useEffect(() => {
+        getMyProducts();
+    }, [token, isAddProductOpen]);
+
+    const getMyProducts = async () => {
+        try {
+            const items = await getItems(token);
+            console.log(items);
+
+            const ownedItems = items.filter(item => item['is_owner'] === true);
+
+            setProducts(ownedItems);
+        } catch (error) {
+            console.error(error.message);
+            setProducts([]);
+        }
+    }
 
     // Open Add Product Dialog
     const handleAddProductClick = () => {
@@ -37,7 +55,6 @@ export const AccountProducts = () => {
             title: "",
             price: "",
             description: "",
-            status: "On sale",
         });
         setIsAddProductOpen(true);
     };
@@ -54,25 +71,24 @@ export const AccountProducts = () => {
     };
 
     // Submit New Product
-    const handleAddProductSubmit = (e) => {
+    const handleAddProductSubmit = async (e) => {
         e.preventDefault();
 
-        const productId = 100 + sampleMyProducts.length;
-        const date = new Date().toISOString().split("T")[0]
+        setIsButtonClicked(true);
 
-        // Add new product to the product list (must be replace by recall API)
-        sampleMyProducts.push({
-            ...formData,
-            id: productId,
-            dateAdded: date,
-            image: sampleImage2,
-            price: Number(formData.price),
-            status: "On sale",
-        });
-        setProducts(sampleMyProducts);
-        setIsAddProductOpen(false);
+        try {
+            await postItem(token, formData);
 
-        alert("Add product successfully !");
+            await getMyProducts();
+
+            alert("Added successfully!");
+
+            setIsAddProductOpen(false);
+        } catch (error) {
+            alert(error.message);
+        }
+
+        setIsButtonClicked(false);
     };
 
     // Open the detail dialog
@@ -111,6 +127,10 @@ export const AccountProducts = () => {
         setSelectedProduct(null);
     };
 
+    const handleCheckboxChange = (event) => {
+        setIsConfirmed(event.target.checked);
+    };
+
     // Format the products data for the table
     const tableData = formatProductData(products, handleDetailClick);
 
@@ -122,12 +142,10 @@ export const AccountProducts = () => {
             </div>
             <GenericTable headers={headers} data={tableData} />
 
-            {/* Add Product Dialog */}
             {isAddProductOpen && (
                 <>
-                    {/* Dialog Content */}
                     <PopUpDialog>
-                        <h2>Add New Product</h2>
+                        <h2 style={ { ...styles.title, paddingBottom: '20px' } }>Add New Product</h2>
                         <form onSubmit={handleAddProductSubmit}>
                             <div style={styles.inputField }>
                                 <label><strong>Product Name:</strong></label>
@@ -159,11 +177,12 @@ export const AccountProducts = () => {
                                 />
                             </div>
                             <div style={styles.buttonContainer}>
-                                <StyledButton
+                                <StyledButton2
                                     type="submit"
+                                    disabled={isButtonClicked}
                                 >
                                     Add Product
-                                </StyledButton>
+                                </StyledButton2>
                                 <StyledButton
                                     type="button"
                                     onClick={handleCloseAddProduct}
@@ -184,19 +203,16 @@ export const AccountProducts = () => {
                 <>
                     {/* Dialog Content */}
                     <PopUpDialog>
-                        <h2 style={ { ...styles.title, paddingBottom: '20px'  } }>Edit Product</h2>
-                        <p style={ styles.text }><strong>Date added:</strong> { selectedProduct.dateAdded }</p>
+                        <h2 style={ { ...styles.title, paddingBottom: '20px' } }>Edit Product</h2>
+                        <p style={ styles.text }><strong>Date
+                            added:</strong> { new Date(selectedProduct.date_added).toLocaleDateString('en-GB', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                        }) }</p>
+                        <p style={ styles.text }><strong>Product name:</strong> { selectedProduct.title }</p>
+                        <p style={ styles.text }><strong>Description:</strong> { selectedProduct.description }</p>
                         <form onSubmit={ handleEditProductSubmit }>
-                            <div style={ styles.inputField }>
-                                <label><strong>Product Name:</strong></label>
-                                <GenericInput
-                                    type="text"
-                                    name="title"
-                                    value={ formData.title }
-                                    onChange={ handleFormChange }
-                                    required={ true }
-                                />
-                            </div>
                             <div style={ styles.inputField }>
                                 <label><strong>Price:</strong></label>
                                 <GenericInput
@@ -207,30 +223,20 @@ export const AccountProducts = () => {
                                     required={ true }
                                 />
                             </div>
-                            <div style={ styles.inputField }>
-                                <label><strong>Status:</strong></label>
-                                <GenericSelection
-                                    name="status"
-                                    value={ formData.status }
-                                    onChange={ handleFormChange }
-                                    required={ true }
-                                    options={ ["On sale", "Sold"] }
+                            <label style={ styles.checkboxField }>
+                                <input
+                                    type="checkbox"
+                                    checked={ isConfirmed }
+                                    onChange={ handleCheckboxChange }
                                 />
-                            </div>
-                            <div style={ styles.inputField }>
-                                <label><strong>Description:</strong></label>
-                                <GenericTextArea
-                                    name="description"
-                                    value={ formData.description }
-                                    onChange={ handleFormChange }
-                                    required={ true }
-                                />
-                            </div>
+                                Please confirm to proceed editing.
+                            </label>
                             <div style={ styles.buttonContainer }>
                                 <StyledButton2
                                     type="submit"
+                                    disabled={ !isConfirmed || isButtonClicked }
                                 >
-                                    Edit Product
+                                    Edit Price
                                 </StyledButton2>
                                 <StyledButton
                                     type="button"
@@ -242,8 +248,8 @@ export const AccountProducts = () => {
                         </form>
                     </PopUpDialog>
 
-                        {/* Backdrop */ }
-                        <BackDrop onClick={ handleCloseDetailDialog }/>
+                    {/* Backdrop */ }
+                    <BackDrop onClick={ handleCloseDetailDialog }/>
                 </>
             ) }
         </AccountContent>

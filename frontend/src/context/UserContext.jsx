@@ -1,6 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { deleteCart, fetchUserDetails, getCart, loginUser, postCart, putCart, registerUser } from "@api";
+import {
+    changeUserPassword,
+    deleteCart,
+    fetchUserDetails,
+    getCart,
+    loginUser,
+    postCart,
+    putCart,
+    registerUser
+} from "@api";
+import error from "eslint-plugin-react/lib/util/error.js";
 
 const UserContext = createContext();
 
@@ -59,6 +69,16 @@ export const UserProvider = ({ children }) => {
         setToken(null);
         setCartList([]);
     };
+
+    const handleChangePassword = async (currentPassword, newPassword) => {
+        try {
+            await changeUserPassword(token, currentPassword, newPassword);
+            return '';
+        } catch (error) {
+            console.error("Change password failed:", error.message);
+            return error.message;
+        }
+    }
 
     const handleGetCart = async () => {
         try {
@@ -127,7 +147,7 @@ export const UserProvider = ({ children }) => {
     }, [cartList]);
 
     return (
-        <UserContext.Provider value={{ token, setToken, cartList, setCartList, handleGetUserDetails, handleLogin, handleRegister, handleLogout, handleGetCart, handlePostCart, handleRemoveCartItem, handleDeleteCart }}>
+        <UserContext.Provider value={{ token, setToken, cartList, setCartList, handleGetUserDetails, handleLogin, handleRegister, handleLogout, handleChangePassword, handleGetCart, handlePostCart, handleRemoveCartItem, handleDeleteCart }}>
             {children}
         </UserContext.Provider>
     );

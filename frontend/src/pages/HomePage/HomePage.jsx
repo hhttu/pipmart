@@ -1,6 +1,5 @@
 import { SearchBar } from "@components/common/SearchBar/SearchBar.jsx";
 import { ProductList } from "@components/product/ProductList/ProductList.jsx";
-import { sampleProducts } from "../../constants.js";
 import { Page } from "@components/styledComponents.js";
 import { useEffect, useState } from "react";
 import { useUser } from "@context/UserContext.jsx";
@@ -12,7 +11,7 @@ export const HomePage = () => {
 
     const handleSearch = (query) => {
         console.log(`Searching for: ${query}`);
-        setProducts(sampleProducts);
+        setProducts([]);
         // Insert after with API call for searching
     };
 

@@ -38,4 +38,23 @@ export const styles = {
         fontWeight: 500,
         borderBottom: "1px solid #ddd",
     },
+    title: {
+        margin: '10px 0',
+    },
+    inputField: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: "5px",
+    },
+    checkboxField: {
+        display: 'flex',
+        alignItems: "center",
+        gap: "5px",
+    },
+    buttonContainer: {
+        width: "300px",
+        display: "flex",
+        gap: "10px",
+        padding: "20px 0 15px",
+    },
 };

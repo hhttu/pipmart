@@ -55,6 +55,24 @@ export const registerUser = async (username, email, password) => {
     return await response.json();
 };
 
+export const changeUserPassword = async (authToken, current_password, new_password) => {
+    const response = await fetch(`${API_HOST}/api/users/change-password/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify({ current_password, new_password }),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+};
+
 export const getCart = async (authToken) => {
     const response = await fetch(`${API_HOST}/api/cart/`, {
         method: 'GET',
@@ -141,6 +159,24 @@ export const getItems = async (authToken) => {
     return await response.json();
 }
 
+export const postItem = async (authToken, item) => {
+    const response = await fetch(`${API_HOST}/api/items/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify(item),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+}
+
 export const getItemById = async (authToken, item_id) => {
     const headers = authToken
         ? { 'Authorization': `Token ${authToken}` }
@@ -158,3 +194,19 @@ export const getItemById = async (authToken, item_id) => {
 
     return await response.json();
 }
+
+export const getOrder = async (authToken) => {
+    const response = await fetch(`${API_HOST}/api/order/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${authToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+};

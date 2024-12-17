@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { users } from "../../constants.js";
 import { styles } from "./styles.js";
 import { GenericInput } from "@components/common/GenericInput/GenericInput.jsx";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa6";
 import { Page } from "@components/styledComponents.js";
-import { registerUser } from "@api";
 import { useUser } from "@context/UserContext.jsx";
 
 export const RegisterPage = () => {

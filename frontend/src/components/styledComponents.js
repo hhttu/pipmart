@@ -93,6 +93,7 @@ export const StyledChip = styled.div`
     color: ${(props) => props.color || "#000"};
     background-color: ${(props) => props.backgroundcolor || "#AAAAAA"};
     font-weight: 500;
+    text-transform: capitalize;
     text-align: center;
 `;
 

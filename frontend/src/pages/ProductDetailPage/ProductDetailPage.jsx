@@ -7,7 +7,7 @@ import { WarningBox } from "@components/common/WarningBox/WarningBox.jsx";
 import { SellerChip } from "@components/common/SellerChip/SellerChip.jsx";
 import { useUser } from "@context/UserContext.jsx";
 import { getItemById } from "@api";
-import { ColorSquare } from "@components/common/ColorSquare/ColorSquare.jsx";
+import productImage from "@assets/loading-cat.jpg";
 
 export const ProductDetailPage = () => {
     const { id } = useParams();
@@ -75,35 +75,39 @@ export const ProductDetailPage = () => {
                     <StyledLinkSpan>Back to Home</StyledLinkSpan>
                 </a>
             </div>
-            <div style={styles.productContainer}>
-                <ColorSquare alt={title} styles={styles.mainImage}/>
+            <div style={ styles.productContainer }>
+                <img src={ productImage } alt={ title } style={ styles.mainImage }/>
 
-                <div style={styles.productInfo}>
-                    <div style={styles.productHeader}>
-                        <div style={styles.titleContainer}>
-                            <h2 style={styles.productTitle}>{title}</h2>
-                            {is_owner && (
-                                <SellerChip />
-                            )}
+                <div style={ styles.productInfo }>
+                    <div style={ styles.productHeader }>
+                        <div style={ styles.titleContainer }>
+                            <h2 style={ styles.productTitle }>{ title }</h2>
+                            { is_owner && (
+                                <SellerChip/>
+                            ) }
                         </div>
                         <div style={ styles.priceSection }>
                             <span style={ styles.price }>€{ price.toFixed(2) }</span>
                         </div>
                     </div>
 
-                    <button style={styles.addToCartButton} onClick={handleAddToCart}>Add to Bag</button>
-                    {errorMessage && (
-                        <WarningBox errorMessage={errorMessage} />
-                    )}
+                    <button style={ styles.addToCartButton } onClick={ handleAddToCart }>Add to Bag</button>
+                    { errorMessage && (
+                        <WarningBox errorMessage={ errorMessage }/>
+                    ) }
 
-                    <div style={styles.productDetails}>
-                        <h3 style={styles.detailsTitle}>Details</h3>
+                    <div style={ styles.productDetails }>
+                        <h3 style={ styles.detailsTitle }>Details</h3>
                         <p>
-                            <strong>Added Date:</strong>{' '}
-                            {new Date(date_added).toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                            <strong>Added Date:</strong>{ ' ' }
+                            { new Date(date_added).toLocaleDateString('en-GB', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                            }) }
                         </p>
                         <p>
-                            <strong>Description:</strong> {description}
+                            <strong>Description:</strong> { description }
                         </p>
                     </div>
                 </div>

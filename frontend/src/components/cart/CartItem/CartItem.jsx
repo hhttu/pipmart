@@ -1,11 +1,11 @@
 import { styles } from "@components/cart/CartItem/styles.js";
-import { ColorSquare } from "@components/common/ColorSquare/ColorSquare.jsx";
+import productImage from "@assets/loading-cat.jpg";
 
 export const CartItem = ({ item, onRemove }) => {
     return (
         <div style={styles.container}>
-            <ColorSquare alt={item.title} styles={styles.image} />
-            <div style={styles.details}>
+            <img src={ productImage } alt={ item.title } style={ styles.image }/>
+            <div style={ styles.details }>
                 <div>
                     <h3 style={styles.title}>{item.title}</h3>
                     <p>${item.price}</p>

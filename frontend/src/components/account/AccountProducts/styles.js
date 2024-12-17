@@ -18,10 +18,15 @@ export const styles = {
         gap: "5px",
     },
     buttonContainer: {
-        width: "500px",
+        width: "300px",
         display: "flex",
         gap: "10px",
-        paddingTop: "10px",
+        padding: "20px 0 15px",
+    },
+    checkboxField: {
+        display: 'flex',
+        alignItems: "center",
+        gap: "5px",
     },
     viewButton: {
         padding: '7px 10px',

@@ -1,19 +1,14 @@
 import { StyledButton, StyledChip } from "@components/styledComponents.js";
 import { styles } from "@components/account/AccountOrders/styles.js";
-import { sampleProducts } from "../../../constants.js";
 
 export const formatOrderData = (orders, handleDetailClick) => {
     return orders.map((order) => ({
-        Date: order.date,
-        "Order Number": order.orderNumber,
-        Status: (
-            <StyledChip
-                color="#FFF"
-                backgroundcolor={order.status === "Ordered" ? "orange" : "green"}
-            >
-                {order.status}
-            </StyledChip>
-        ),
+        Date: new Date(order.date_purchased).toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }),
+        "Order Number": `ORDER ${order.id}`,
         Detail: (
             <StyledButton
                 style={styles.viewButton}
@@ -26,5 +21,6 @@ export const formatOrderData = (orders, handleDetailClick) => {
 };
 
 export const getProductDetails = (productIds) => {
-    return sampleProducts.filter((product) => productIds.includes(product.id));
+    return [];
+    // return sampleProducts.filter((product) => productIds.includes(product.id));
 };
