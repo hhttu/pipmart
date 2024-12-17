@@ -50,16 +50,22 @@ def landing_page(request):
 
 class ItemListAPIView(APIView):
     def get(self, request):
-        items = Item.objects.all()  # Get all items
+        title_query = request.GET.get('title', None)  
+        if title_query:
+            items = Item.objects.filter(title__icontains=title_query)
+        else:
+            items = Item.objects.all()
+
         serializer = ItemSerializer(items, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
         serializer = ItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            serializer.save(owner=request.user)  # Assuming the item owner is the logged-in user
+            serializer.save(owner=request.user) 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ItemDetailAPIView(APIView):
     def get(self, request, pk):
