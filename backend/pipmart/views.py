@@ -246,7 +246,7 @@ class PurchaseCreateAPIView(APIView):
             existing_items = Item.objects.filter(id__in=[item.id for item in items])
 
             # Check for items that are already sold
-            sold_items = [item for item in existing_items if item.status == 'sold']
+            sold_items = [item for item in existing_items if item.status == 'purchased']
 
             if sold_items:
                 sold_item_titles = [item.title for item in sold_items]
@@ -273,7 +273,8 @@ class PurchaseCreateAPIView(APIView):
             # If no sold items, proceed to create the purchase
             purchase = serializer.save(buyer=request.user)
             for item in items:
-                item.status = 'sold'
+                item.status = 'purchased'
+                item.buyer = request.user  
                 item.save()
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
