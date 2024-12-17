@@ -29,14 +29,9 @@ class ItemSerializer(serializers.ModelSerializer):
     
     def get_buyer(self, obj):
         request = self.context.get('request', None)
-        if obj.buyer and request and hasattr(request, 'user'):
-            if obj.buyer == request.user:
-                return {
-                    "id": obj.buyer.id,
-                    "username": obj.buyer.username,
-                    "email": obj.buyer.email
-                }
-        return None
+        if request and hasattr(request, 'user'):
+            return obj.buyer == request.user
+        return False
 
 class CartSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
