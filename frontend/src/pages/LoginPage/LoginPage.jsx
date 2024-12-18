@@ -51,7 +51,7 @@ export const LoginPage = () => {
                     {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
                     <button type="submit" style={styles.button}>Login</button>
                 </form>
-                <p>Don&#39;t have an account? <a style={styles.link} href="/register">Register here</a></p>
+                <p>Don&#39;t have an account? <a style={styles.link} href="/signup">Register here</a></p>
             </div>
         </Page>
     )
