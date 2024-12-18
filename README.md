@@ -19,7 +19,8 @@ PipMart is a full-stack application that allows users to create, manage, and pur
    - A dynamic, responsive user interface implemented using React.
 
 4. **Automatic Database Population**  
-   - A link allows any visitor to auto-populate the database with **6 users** (3 sellers and 10 items each).  
+   - A link allows any visitor to auto-populate the database with **6 users** (3 sellers and 10 items each).
+   Three sellers are testuser1, testuser2, testuser3.
    - The database resets before each re-population.
 
 5. **Browse Items**  
