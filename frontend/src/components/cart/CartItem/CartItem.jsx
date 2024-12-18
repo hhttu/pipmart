@@ -11,6 +11,9 @@ export const CartItem = ({ item, onRemove }) => {
                     <p>${item.price}</p>
                 </div>
                 <div style={styles.modificationSection}>
+                    {item['status'] === "purchased" && (
+                        <p style={styles.message}>This item is no longer for sale. Please remove it from your cart</p>
+                    )}
                     <button style={styles.button} onClick={() => onRemove(item.id)}>
                         Remove
                     </button>

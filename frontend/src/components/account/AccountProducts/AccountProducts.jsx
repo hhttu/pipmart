@@ -6,7 +6,7 @@ import { formatProductData } from "@components/account/AccountProducts/accountPr
 import { GenericTable } from "@components/common/GenericTable/GenericTable.jsx";
 import { GenericTextArea } from "@components/common/GenericTextArea/GenericTextArea.jsx";
 import { useUser } from "@context/UserContext.jsx";
-import { getItems, postItem } from "@api";
+import { getItems, postItem, putItem } from "@api";
 
 const headers = [
     { label: "Date added", width: "20%" },
@@ -40,7 +40,7 @@ export const AccountProducts = () => {
             const items = await getItems(token);
             console.log(items);
 
-            const ownedItems = items.filter(item => item['is_owner'] === true);
+            const ownedItems = items.filter(item => (item['is_owner'] === true || item['is_buyer'] === true));
 
             setProducts(ownedItems);
         } catch (error) {
@@ -89,6 +89,7 @@ export const AccountProducts = () => {
         }
 
         setIsButtonClicked(false);
+        setIsConfirmed(false);
     };
 
     // Open the detail dialog
@@ -98,28 +99,29 @@ export const AccountProducts = () => {
         setFormData({
             title: product.title,
             price: product.price,
-            status: product.status,
             description: product.description,
         });
     };
 
-    const handleEditProductSubmit = (e) => {
+    const handleEditProductSubmit = async (e) => {
         e.preventDefault();
-        const updatedProduct = {
-            ...selectedProduct,
-            name: formData.name,
-            price: formData.price,
-            status: formData.status,
-            description: formData.description,
-        };
 
-        // Update the product in the product list by ID
-        setProducts((prevProducts) =>
-            prevProducts.map((product) =>
-                product.id === selectedProduct.id ? updatedProduct : product
-            )
-        );
-        setSelectedProduct(null);
+        setIsButtonClicked(true);
+
+        try {
+            await putItem(token, selectedProduct.id, formData);
+
+            await getMyProducts();
+
+            alert("Edit successfully!");
+
+            setSelectedProduct(null);
+        } catch (error) {
+            alert(error.message);
+        }
+
+        setIsButtonClicked(false);
+
     };
 
     // Close the detail dialog
@@ -213,45 +215,57 @@ export const AccountProducts = () => {
                         <p style={ styles.text }><strong>Product name:</strong> { selectedProduct.title }</p>
                         <p style={ styles.text }><strong>Description:</strong> { selectedProduct.description }</p>
                         <form onSubmit={ handleEditProductSubmit }>
-                            <div style={ styles.inputField }>
-                                <label><strong>Price:</strong></label>
-                                <GenericInput
-                                    type="number"
-                                    name="price"
-                                    value={ formData.price }
-                                    onChange={ handleFormChange }
-                                    required={ true }
-                                />
-                            </div>
-                            <label style={ styles.checkboxField }>
-                                <input
-                                    type="checkbox"
-                                    checked={ isConfirmed }
-                                    onChange={ handleCheckboxChange }
-                                />
-                                Please confirm to proceed editing.
-                            </label>
-                            <div style={ styles.buttonContainer }>
-                                <StyledButton2
-                                    type="submit"
-                                    disabled={ !isConfirmed || isButtonClicked }
-                                >
-                                    Edit Price
-                                </StyledButton2>
-                                <StyledButton
-                                    type="button"
-                                    onClick={ handleCloseDetailDialog }
-                                >
-                                    Cancel
-                                </StyledButton>
-                            </div>
-                        </form>
-                    </PopUpDialog>
 
-                    {/* Backdrop */ }
-                    <BackDrop onClick={ handleCloseDetailDialog }/>
-                </>
-            ) }
-        </AccountContent>
-    );
+                            { selectedProduct.status !== 'on-sale' ? (
+                                <>
+                                    <p style={ styles.text }><strong>Price:</strong> { selectedProduct.price }</p>
+                                    <p style={ styles.message }>This item can no longer be modified</p>
+                                </>
+                                ) : (
+                                <>
+                                    <div style={ styles.inputField }>
+                                        <label><strong>Price:</strong></label>
+                                        <GenericInput
+                                            type="number"
+                                            name="price"
+                                            value={ formData.price }
+                                            onChange={ handleFormChange }
+                                            required={ true }
+                                        />
+                                    </div>
+                                    <label style={ styles.checkboxField }>
+                                        <input
+                                            type="checkbox"
+                                            checked={ isConfirmed }
+                                            onChange={ handleCheckboxChange }
+                                        />
+                                        Please confirm to proceed editing.
+                                    </label>
+                                </>
+                            )}
+                        <div style={ styles.buttonContainer }>
+                            <StyledButton2
+                                type="submit"
+                                disabled={ !isConfirmed || isButtonClicked || selectedProduct.status !== 'on-sale' }
+                            >
+                                Edit Price
+                            </StyledButton2>
+                            <StyledButton
+                                type="button"
+                                onClick={ handleCloseDetailDialog }
+                            >
+                                Cancel
+                            </StyledButton>
+                        </div>
+                    </form>
+                </PopUpDialog>
+
+            {/* Backdrop */ }
+            <BackDrop onClick={ handleCloseDetailDialog }/>
+        </>
+    )
+}
+</AccountContent>
+)
+    ;
 };

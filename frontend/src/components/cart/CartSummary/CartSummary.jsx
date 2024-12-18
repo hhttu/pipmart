@@ -1,13 +1,8 @@
 import { styles } from "@components/cart/CartSummary/styles.js";
 import { StyledButton2 } from "@components/styledComponents.js";
 
-export const CartSummary = ({ subtotal, shipping }) => {
+export const CartSummary = ({ subtotal, shipping, handlePurchase }) => {
     const total = subtotal + shipping;
-
-    const handleClick = () => {
-        console.log("Check out!");
-        // Add purchase API endpoint
-    }
 
     return (
         <div style={styles.container}>
@@ -24,7 +19,7 @@ export const CartSummary = ({ subtotal, shipping }) => {
                 <span>Total:</span>
                 <span>${total.toFixed(2)}</span>
             </p>
-            { total !== 0 && (<StyledButton2 onClick={handleClick}>Check Out</StyledButton2>) }
+            { total !== 0 && (<StyledButton2 onClick={handlePurchase}>Check Out</StyledButton2>) }
 
         </div>
     );

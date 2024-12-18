@@ -82,6 +82,9 @@ class ItemDetailAPIView(APIView):
             item = Item.objects.get(pk=pk)
         except Item.DoesNotExist:
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        if item.status != 'on-sale' or item.owner != request.user:
+            return Response({"error": "This item is not available for modification"}, status=status.HTTP_400_BAD_REQUEST)
         
         serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
@@ -209,7 +212,6 @@ class CartAPIView(APIView):
         if not item_id:
             return Response({"error": "Item ID is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(cart.items)
         try:
             item = cart.items.get(id=item_id)
         except Item.DoesNotExist:
@@ -246,44 +248,17 @@ class PurchaseDetailAPIView(APIView):
 
 class PurchaseCreateAPIView(APIView):
     def post(self, request):
-        serializer = PurchaseSerializer(data=request.data)
+        serializer = PurchaseSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            items = serializer.validated_data['items']
-            existing_items = Item.objects.filter(id__in=[item.id for item in items])
+            purchase = serializer.save()
 
-            # Check for items that are already sold
-            sold_items = [item for item in existing_items if item.status == 'purchased']
-
-            if sold_items:
-                sold_item_titles = [item.title for item in sold_items]
-                return Response(
-                    {
-                        "error": "Some items have already been purchased.",
-                        "sold_items": sold_item_titles,
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            # Check if the price of the items in the cart hasn't changed
-            changed_prices = [item for item in existing_items if item.price != next((i.price for i in items if i.id == item.id), None)]
-
-            if changed_prices:
-                return Response(
-                    {
-                        "error": "The price of some items has changed.",
-                        "changed_items": [{"id": item.id, "price": item.price} for item in changed_prices],
-                    },
-                    status=status.HTTP_409_CONFLICT,
-                )
-
-            # If no sold items, proceed to create the purchase
-            purchase = serializer.save(buyer=request.user)
-            for item in items:
-                item.status = 'purchased'
-                item.buyer = request.user  
-                item.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data = {
+                'id': purchase.id,
+                'buyer': UserSerializer(purchase.buyer).data,
+                'items': serializer.validated_data['items'],
+                'date_purchased': purchase.date_purchased,
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PurchaseListAPIView(APIView):
@@ -299,5 +274,15 @@ class UserOrderListAPIView(APIView):
 
         # Fetch purchases for the authenticated user
         purchases = Purchase.objects.filter(buyer=request.user)
-        serializer = PurchaseSerializer(purchases, many=True)
-        return Response(serializer.data)
+        serialized_data = []
+        for purchase in purchases:
+            serialized_data.append({
+                'id': purchase.id,
+                'buyer': UserSerializer(purchase.buyer).data,
+                'items': [
+                    item.id
+                    for item in purchase.items.all()
+                ],
+                'date_purchased': purchase.date_purchased,
+            })
+        return Response(serialized_data)

@@ -11,13 +11,11 @@ export const AccountPage = ({option = ""}) => {
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
-        console.log("UseEffect called");
         const getUserDetails = async () => {
             return await handleGetUserDetails();
         }
 
         getUserDetails().then((value) => {
-            console.log("Debug ", value)
             setUserDetails(value);
         })
     }, [token])

@@ -2,28 +2,40 @@ import { StyledButton, StyledChip } from "@components/styledComponents.js";
 import { styles } from "@components/account/AccountProducts/styles.js";
 
 export const formatProductData = (products, handleDetailClick) => {
-    const getStatusColor = (status) => {
-        if (status === "on-sale") {
-            return "#FFEEC1";
+    const getStatusColor = (status, isBuyer) => {
+        if (status === "purchased" && isBuyer) {
+            return "#EDDBF9";
         }
 
-        if (status === "sold") {
+        if (status === "purchased" && !isBuyer) {
             return "#CDFFE1";
         }
 
-        return "#EDDBF9"
+        return "#FFEEC1"
     }
 
-    const getStatusFontColor = (status) => {
-        if (status === "on-sale") {
-            return "#FFB800";
+    const getStatusFontColor = (status, isBuyer) => {
+        if (status === "purchased" && isBuyer) {
+            return "#662AA4";
         }
 
-        if (status === "sold") {
+        if (status === "purchased" && !isBuyer) {
             return "#2B8768";
         }
 
-        return "#662AA4";
+        return "#FFB800";
+    }
+
+    const getStatusText = (status, isBuyer) => {
+        if (status === "purchased" && isBuyer) {
+            return "Purchased";
+        }
+
+        if (status === "purchased" && !isBuyer) {
+            return "Sold";
+        }
+
+        return "On sale";
     }
 
     return products.map((product) => ({
@@ -36,10 +48,10 @@ export const formatProductData = (products, handleDetailClick) => {
         Price: `$${product.price}`,
         Status: (
             <StyledChip
-                color={getStatusFontColor(product.status)}
-                backgroundcolor={getStatusColor(product.status)}
+                color={getStatusFontColor(product.status, product.is_buyer)}
+                backgroundcolor={getStatusColor(product.status, product.is_buyer)}
             >
-                {product.status.replace(/-/g, ' ')}
+                {getStatusText(product.status, product.is_buyer)}
             </StyledChip>
         ),
         Detail: (

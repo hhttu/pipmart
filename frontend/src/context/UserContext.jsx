@@ -10,7 +10,6 @@ import {
     putCart,
     registerUser
 } from "@api";
-import error from "eslint-plugin-react/lib/util/error.js";
 
 const UserContext = createContext();
 

@@ -2,7 +2,7 @@ import { AccountContent, BackDrop, PopUpDialog, StyledButton } from "@components
 import { styles } from "@components/account/AccountOrders/styles.js";
 import { GenericTable } from "@components/common/GenericTable/GenericTable.jsx";
 import { useEffect, useState } from "react";
-import { formatOrderData, getProductDetails } from "@components/account/AccountOrders/accountOrdersUtils.jsx";
+import { formatOrderData } from "@components/account/AccountOrders/accountOrdersUtils.jsx";
 import { useUser } from "@context/UserContext.jsx";
 import { getItemById, getOrder } from "@api";
 
@@ -49,6 +49,7 @@ export const AccountOrders = () => {
             // Fetch all items in parallel
             const orderedItems = await Promise.all(
                 order.items.map(async (itemId) => {
+                    console.log(itemId);
                     try {
                         return await getItemById(token, itemId);
                     } catch (error) {
@@ -68,6 +69,7 @@ export const AccountOrders = () => {
             }
 
             setOrderItems(validItems);
+            console.log(order);
             setSelectedOrder(order);
         } catch (error) {
             alert(error.message);
@@ -92,12 +94,16 @@ export const AccountOrders = () => {
                 <>
                     <PopUpDialog>
                         <h2 style={styles.title}>Order Details</h2>
-                        <p style={styles.text}><strong>Date:</strong> {selectedOrder.date}</p>
-                        <p style={styles.text}><strong>Order Number:</strong> {selectedOrder.orderNumber}</p>
+                        <p style={styles.text}><strong>Date:</strong> {new Date(selectedOrder.date_purchased).toLocaleDateString('en-GB', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                        })}</p>
+                        <p style={styles.text}><strong>Order Number:</strong> ORDER{selectedOrder.id}</p>
                         <p style={styles.text}><strong>Products:</strong></p>
                         <GenericTable
                             headers={productHeaders}
-                            data={getProductDetails(orderItems).map((product) => ({
+                            data={orderItems.map((product) => ({
                                 "Product Name": product.title,
                                 "Price": `$${product.price}`,
                                 "Description": product.description,

@@ -159,9 +159,45 @@ export const getItems = async (authToken) => {
     return await response.json();
 }
 
+export const searchItems = async (authToken, title) => {
+    const headers = authToken
+        ? { 'Authorization': `Token ${authToken}` }
+        : {};
+
+    const response = await fetch(`${API_HOST}/api/items?title=${encodeURIComponent(title)}`, {
+        method: 'GET',
+        headers,
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+};
+
 export const postItem = async (authToken, item) => {
     const response = await fetch(`${API_HOST}/api/items/`, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify(item),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.error);
+    }
+
+    return await response.json();
+}
+
+export const putItem = async (authToken, item_id, item) => {
+    const response = await fetch(`${API_HOST}/api/items/${item_id}/`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${authToken}`,
@@ -196,7 +232,7 @@ export const getItemById = async (authToken, item_id) => {
 }
 
 export const getOrder = async (authToken) => {
-    const response = await fetch(`${API_HOST}/api/order/`, {
+    const response = await fetch(`${API_HOST}/api/orders/`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${authToken}`,
@@ -210,3 +246,26 @@ export const getOrder = async (authToken) => {
 
     return await response.json();
 };
+
+export const postPurchase = async (authToken, items) => {
+    const response = await fetch(`${API_HOST}/api/purchases/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify({
+            items: items,
+        }),
+    });
+
+    if (!response.ok) {
+        const errorResponse = await response.json();
+        if (errorResponse.items) {
+            throw new Error(JSON.stringify(errorResponse.items));
+        }
+        throw new Error(JSON.stringify(errorResponse));
+    }
+
+    return await response.json();
+}

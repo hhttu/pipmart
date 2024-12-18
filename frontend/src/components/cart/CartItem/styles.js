@@ -24,8 +24,7 @@ export const styles = {
     },
     modificationSection: {
         display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        flexDirection: "column",
     },
     button: {
         backgroundColor: "transparent",
@@ -33,5 +32,11 @@ export const styles = {
         textDecoration: "underline",
         cursor: "pointer",
         padding: "5px 0",
+        width: "50px",
     },
+    message: {
+        fontSize: "12px",
+        margin: "2px 0",
+        color: "#C14859",
+    }
 };

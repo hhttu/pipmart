@@ -6,4 +6,7 @@ export const styles = {
         padding: '20px',
         justifyItems: 'center',
     },
+    message: {
+        textAlign: 'center',
+    }
 };

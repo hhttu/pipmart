@@ -3,10 +3,14 @@ import { ProductCard } from "@components/product/ProductCard/ProductCard.jsx";
 
 export const ProductList = ({ products }) => {
     return (
-        <div style={styles.productGrid}>
-            {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
+        products.length > 0 ? (
+            <div style={styles.productGrid}>
+                {products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                ))}
+            </div>
+        ) : (
+            <p style={styles.message}>No item available</p>
+        )
     );
 };

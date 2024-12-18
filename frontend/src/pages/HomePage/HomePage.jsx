@@ -3,16 +3,26 @@ import { ProductList } from "@components/product/ProductList/ProductList.jsx";
 import { Page } from "@components/styledComponents.js";
 import { useEffect, useState } from "react";
 import { useUser } from "@context/UserContext.jsx";
-import { getItems } from "@api";
+import { getItems, searchItems } from "@api";
 
 export const HomePage = () => {
     const { token } = useUser();
     const [products, setProducts] = useState([]);
 
-    const handleSearch = (query) => {
+    const handleSearch = async (query) => {
         console.log(`Searching for: ${query}`);
-        setProducts([]);
-        // Insert after with API call for searching
+
+        try {
+            const items = await searchItems(token, query);
+            console.log(items);
+
+            const onSaleFilteredItems = items.filter(item => item['status'] === "on-sale");
+
+            setProducts(onSaleFilteredItems);
+        } catch (error) {
+            console.error(error.message);
+            setProducts([]);
+        }
     };
 
     useEffect(() => {
@@ -21,7 +31,9 @@ export const HomePage = () => {
                 const items = await getItems(token);
                 console.log(items);
 
-                setProducts(items);
+                const onSaleItems = items.filter(item => item['status'] === "on-sale");
+
+                setProducts(onSaleItems);
             } catch (error) {
                 console.error(error.message);
             }

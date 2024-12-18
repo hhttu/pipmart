@@ -33,5 +33,11 @@ export const styles = {
     },
     addButton: {
         width: '170px',
+    },
+    message: {
+        margin: "2px 0",
+        color: "#C14859",
+        fontSize: "12px",
+        textAlign: "center",
     }
 };

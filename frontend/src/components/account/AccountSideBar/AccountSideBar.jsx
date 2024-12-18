@@ -62,8 +62,6 @@ export const AccountSideBar = ({ option, userDetails }) => {
         setIsConfirmed(event.target.checked);
     };
 
-    console.log(userDetails);
-
     return (
         <div style={styles.sidebar}>
             <div style={styles.profileSection}>

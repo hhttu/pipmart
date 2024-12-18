@@ -35,7 +35,7 @@ urlpatterns = [
     # Purchase endpoints
     path('api/purchases/<int:pk>/', pipmart_views.PurchaseDetailAPIView.as_view(), name='purchase-detail'),
     path('api/purchases/', pipmart_views.PurchaseCreateAPIView.as_view(), name='purchase-create'),
-    path('api/order/', pipmart_views.UserOrderListAPIView.as_view(), name='user-order-list'),
+    path('api/orders/', pipmart_views.UserOrderListAPIView.as_view(), name='user-order-list'),
 
     #Cart
     path('api/cart/', pipmart_views.CartAPIView.as_view(), name='cart'),  # Access user's cart
